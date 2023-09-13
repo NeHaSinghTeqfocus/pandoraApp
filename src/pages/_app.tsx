@@ -2,6 +2,8 @@ import { AppProps } from "next/app";
 import React, { useState } from "react";
 import Sidebar from "@/components/SideBar/SideBar";
 import menuItems from "../menuItem"; // Correct the import path and variable name
+import AppBar from "@/components/AppBar/AppBar";
+import ResponsiveAppBar from "@/components/AppBar/AppbarMui";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,8 +16,10 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       style={{
         display: "flex",
         height: "100vh",
+        width: 'fit-content',
         marginLeft: "-8px",
         marginTop: "-8px",
+        backgroundColor: "#EFF3F2",
       }}
     >
       <Sidebar
@@ -26,7 +30,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       {/* Pass the menuItems array */}
       <div>
         <button onClick={toggleSidebar}>Sidebar</button>
-        <Component {...pageProps} />
+        {/* <Component {...pageProps} />
+      </div>
+      <div>
+        {/* <AppBar /> */}
+        <ResponsiveAppBar />
       </div>
     </div>
   );
