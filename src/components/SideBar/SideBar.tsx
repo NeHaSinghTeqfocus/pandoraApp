@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   selected={menuItem.path === router.pathname}
                 >
                   <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                  <ListItemText primary={menuItem.name} />
+                  <ListItemText primary={menuItem.name}  sx={{color:'#fff'}}/>
                 </ListItem>
               </Link>
             ) : (
