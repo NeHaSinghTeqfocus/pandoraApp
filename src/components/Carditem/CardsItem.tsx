@@ -1,30 +1,136 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Image from "next/image";
+import Task from "../../../public/Task.png";
+import Dataset from "../../../public/Dataset.png";
+import Gallery from "../../../public/Gallery.png";
+import Feature from "../../../public/Feature.png";
+import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import { makeStyles } from '@mui/styles';
 
-export default function ActionAreaCard() {
+
+const useStyles = makeStyles({
+  flexGrow: {
+    flex: '1',
+  },
+  button1: {
+    backgroundColor: '#FFFFFF',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#70F3F3',
+      color: '#3c52b2',
+  }
+},
+button2: {
+  backgroundColor: '#FFFFFF',
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#DAE0E0',
+    color: '#3c52b2',
+}}
+})
+export default function Cards() {
+  const classes = useStyles()
   return (
-    <Card sx={{ maxWidth: 250 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        "& > :not(style)": {
+          m: 1,
+          mt: 3,
+          width: 290,
+          height: 108,
+        },
+      }}
+    >
+      <Paper
+        elevation={0}
+        sx={{ justifyContent: "flex-start", display: "flex" }}
+      >
+        <Box
+          sx={{
+            height: "60px",
+            width: "60px",
+            marginTop: "25px",
+            marginLeft:'20px'
+          }}
+        >
+          <Button className={classes.button2}>
+          <Image src={Task} alt="Task-icon" width={60} height={50} />
+          </Button>
+        </Box>
+        <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
+          <Typography variant="body2" fontWeight={700} color={'#999999'}>Tasks</Typography>
+          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+        </Box>
+      </Paper>
+      <Paper
+        elevation={0}
+        sx={{ justifyContent: "flex-start", display: "flex" }}
+      >
+        <Box
+          sx={{
+            height: "60px",
+            width: "60px",
+            marginTop: "25px",
+            marginLeft:'20px'
+          }}
+        >
+          <Button className={classes.button2}>
+          <Image src={Dataset} alt="Dataset-icon" width={40} height={40} />
+          </Button>
+        </Box>
+        <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
+          <Typography variant="body2" fontWeight={700} color={'#999999'}>Datasets</Typography>
+          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+        </Box>
+      </Paper>
+      <Paper
+        elevation={0}
+        sx={{ justifyContent: "flex-start", display: "flex" }}
+      >
+        <Box
+          sx={{
+            height: "60px",
+            width: "60px",
+            marginTop: "25px",
+            marginLeft:'20px'
+          }}
+        >
+          <Button className={classes.button2}>
+          <Image src={Gallery} alt="Gallery-icon" width={50} height={50} />
+          </Button>
+        </Box>
+        <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
+          <Typography variant="body2" fontWeight={700} color={'#999999'}>Models</Typography>
+          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+        </Box>
+      </Paper>
+      <Paper
+        elevation={0}
+        sx={{ justifyContent: "flex-start", display: "flex" }}
+      >
+        <Box
+          sx={{
+            height: "60px",
+            width: "60px",
+            marginTop: "25px",
+            marginLeft:'20px'
+          }}
+        >
+          <Button className={classes.button2}>
+          <Image src={Feature} alt="Feature-icon" width={40} height={40} />
+          </Button>
+        </Box>
+        <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
+          <Typography variant="body2" fontWeight={700} color={'#999999'}>Features</Typography>
+          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+        </Box>
+      </Paper>
+
+    </Box>
   );
 }

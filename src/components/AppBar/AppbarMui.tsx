@@ -23,12 +23,8 @@ const settings = ["Dashboard", "Setting", "Logout"];
 const Language = ["Arbic", "Hindi", "English", "Brazil", "Chineese"];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -45,11 +41,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const [isListVisible, setListVisible] = useState(false);
-  const [select, setSelect] = useState('');
+  const [isVisible, setVisible] = useState(false);
+  const [select, setSelect] = useState("");
 
-  const toggleListVisibility = (e : any) => {
-    setListVisible(!isListVisible);
+  const handleSelect = (e: any) => {
+    setVisible(!isVisible);
     setSelect(e.target.value);
   };
 
@@ -115,12 +111,41 @@ function ResponsiveAppBar() {
               </Typography>
             </Box>
             <Box sx={{ padding: "5px 10px 5px 5px" }}>
-            <Image
-                  src={EarthIcon}
-                  alt="Language-Icon"
-                  height={20}
-                  width={20}
-                />
+              <Tooltip title="Language">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0, color: "black" }}
+                >
+                  <Image
+                    src={EarthIcon}
+                    alt="Language-Icon"
+                    height={20}
+                    width={20}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {Language.map((Language) => (
+                  <MenuItem key={Language} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{Language}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
