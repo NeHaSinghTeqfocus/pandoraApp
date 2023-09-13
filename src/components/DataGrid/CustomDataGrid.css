@@ -1,0 +1,13 @@
+/* CustomDataGrid.css */
+.MuiDataGrid-columnHeader {
+  border-right: 1px solid #e0e0e0 !important;
+}
+.MuiDataGrid-row:nth-child(even) {
+  background-color: #f5f7fa;
+}
+.MuiDataGrid-sortIcon {
+  display: none;
+}
+.MuiDataGrid-columnHeaderTitle {
+  white-space: nowrap;
+}

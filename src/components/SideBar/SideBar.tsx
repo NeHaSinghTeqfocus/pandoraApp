@@ -60,24 +60,49 @@ const Sidebar: React.FC<SidebarProps> = ({
       className={`sidebar ${open ? "open" : "closed"}`}
       style={{ background: backgroundColor, color: "#fff" }}
     >
-      <List>
-        {menuItems.map((menuItem, index) => (
+      <List sx={{ paddingTop: "1px" }}>
+        {menuItems.map((menuItem: any, index: number) => (
           <div key={index}>
             {menuItem.path ? (
-              <Link href={menuItem.path} passHref>
+              <Link
+                style={{ textDecoration: "none" }}
+                href={menuItem.path}
+                passHref
+              >
                 <ListItem
                   button
-                  component="a"
+                  // component="a"
                   onClick={() => handleMenuItemClick(menuItem.path)}
                   selected={menuItem.path === router.pathname}
+                  style={{
+                    height: "55px",
+                    paddingTop: "4px !important",
+                    marginTop: "0px !important",
+                    borderLeft:
+                      menuItem.path === router.pathname
+                        ? "5px solid #E3006E"
+                        : "",
+                  }}
                 >
-                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                  <ListItemText primary={menuItem.name} />
+                  <ListItemIcon sx={{}}>
+                    <menuItem.icon fontSize="small" sx={{ color: "white" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{
+                      color: "white",
+                      textDecoration: "none",
+                      fontSize: "14px !important",
+                    }}
+                    primary={menuItem.name}
+                  />
                 </ListItem>
               </Link>
             ) : (
               <ListItem button onClick={() => handleClick(index)}>
-                <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                <ListItemIcon>
+                  {" "}
+                  <menuItem.icon fontSize="small" sx={{ color: "white" }} />
+                </ListItemIcon>
                 <ListItemText primary={menuItem.name} />
                 {menuItem.subItems &&
                   (collapseMenu[index] ? <ExpandLess /> : <ExpandMore />)}
@@ -87,15 +112,35 @@ const Sidebar: React.FC<SidebarProps> = ({
             {menuItem.subItems && (
               <Collapse in={collapseMenu[index]}>
                 <List>
-                  {menuItem.subItems.map((subItem, subIndex) => (
+                  {menuItem.subItems.map((subItem: any, subIndex: number) => (
                     <div key={subIndex}>
                       <ListItem
                         button
                         onClick={() => handleSubItemClick(subItem.path)}
-                        selected={subItem.path === router.pathname}
+                        selected={
+                          subItem.path === router.pathname &&
+                          menuItem.path === router.pathname
+                        }
+                        style={{
+                          borderLeft:
+                            subItem.path === router.pathname &&
+                            menuItem.path === router.pathname
+                              ? "5px solid #E3006E"
+                              : "",
+                        }}
                       >
-                        <ListItemIcon>{subItem.icon}</ListItemIcon>
-                        <ListItemText primary={subItem.name} />
+                        <ListItemIcon sx={{ marginLeft: "12px" }}>
+                          {
+                            <subItem.icon
+                              fontSize="small"
+                              sx={{ color: "white" }}
+                            />
+                          }
+                        </ListItemIcon>
+                        <ListItemText
+                          sx={{ fontSize: "10px !important" }}
+                          primary={subItem.name}
+                        />
                       </ListItem>
                     </div>
                   ))}
