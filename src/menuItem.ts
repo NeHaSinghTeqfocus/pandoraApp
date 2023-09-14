@@ -1,42 +1,47 @@
 import React from "react";
-import HomeIcon from "./icon/HomeIcon";
-import InfoIcon from "./icon/InfoIcon";
-import ContactIcon from "./icon/ContactIcon";
-import { ReactSVGElement } from "react";
+import DashboardSharpIcon from "@mui/icons-material/DashboardSharp";
+import Diversity1Icon from "@mui/icons-material/Diversity1";
+import AddIcon from "@mui/icons-material/Add";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 
 interface SidebarMenuItem {
   name: string;
-  icon: Function;
+  icon: React.ElementType;
   path?: string;
   subItems?: SidebarMenuItem[];
 }
-const menuItems: SidebarMenuItem[] = [
+const menuItems = [
   {
     name: "Dashboard",
     path: "/",
-    icon: HomeIcon,
+    icon: DashboardSharpIcon,
   },
   {
     name: "Workspace",
-    icon: InfoIcon,
+    icon: Diversity1Icon,
     path: "/about",
-    subItems: [
-      {
-        name: "Company",
-        icon: InfoIcon,
-        path: "/about/company",
-      },
-      {
-        name: "Team",
-        icon: InfoIcon,
-        path: "/about/team",
-      },
-    ],
   },
   {
     name: "SIMON",
-    icon: ContactIcon,
-    path: "/contact",
+    icon: AddIcon,
+    subItems: [
+      {
+        name: "DataSet Exploration",
+        icon: PlayArrowIcon,
+        path: "/contact",
+      },
+      {
+        name: "Analysis",
+        icon: PlayArrowIcon,
+        path: "/contact",
+      },
+      {
+        name: "Analysis Exploration",
+        icon: AnalyticsIcon,
+        path: "/contact",
+      },
+    ],
   },
   // Add more menu items as needed
 ];

@@ -41,7 +41,7 @@ export default function Cards() {
         "& > :not(style)": {
           m: 1,
           mt: 3,
-          width: 290,
+          width: 270,
           height: 108,
         },
       }}

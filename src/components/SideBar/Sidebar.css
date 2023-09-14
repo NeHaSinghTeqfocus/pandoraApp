@@ -1,9 +1,9 @@
 .sidebar {
-  width: 240px;
+  width: 260px;
   transition: width 0.3s;
 }
 
 .sidebar.closed {
-  width: 0;
+  width: 60px;
   overflow: hidden;
 }

@@ -4,10 +4,10 @@ import React from "react";
 
 const Contact = () => {
   return (
-  <>
-  <Typography sx={{marginTop:'200px'}}>Hello</Typography>
-  </>
-  )
+    <>
+      <h1>SIMON</h1>
+    </>
+  );
 };
 
 export default Contact;

@@ -1,7 +1,13 @@
 import React from "react";
+// import FileUploader from '@/components/fileupload/FileUpload'
 
 const About = () => {
-  return <h1>Welcome to the About Page</h1>;
+  return (
+    <>
+      <h1>Workplace</h1>
+      {/* <FileUploader /> */}
+    </>
+  );
 };
 
 export default About;
