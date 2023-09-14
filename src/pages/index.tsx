@@ -1,5 +1,5 @@
 // pages/index.tsx
-
+import Cards from "@/components/Carditem/CardsItem";
 import React, { useState } from "react";
 import DataGrid from "@/components/DataGrid/DataGrid";
 import { GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
@@ -315,7 +315,15 @@ const Home: React.FC = () => {
     },
   ];
   return (
-    <Box display="flex" justifyContent="center" sx={{ width: "100%" }}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      sx={{ width: "100%" }}
+    >
+      <Box ml={5} sx={{ direction: "flex", flexDirection: "row-reverse" }}>
+        <Cards />
+      </Box>
       <Box sx={{ width: "95%", height: "400px", mt: 4 }}>
         <DataGrid
           rows={tableData}
