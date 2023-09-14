@@ -13,6 +13,30 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     setSidebarOpen(!sidebarOpen);
   };
   return (
+    // <div style={{
+    //   flexDirection:'column' ,
+    // }}>
+      <div
+        style={{
+          display: "flex",
+          // flexDirection:'row' ,
+          height: "100vh",
+          width: "fit-content",
+          marginLeft: "-8px",
+          marginTop: "-8px",
+          backgroundColor: "#EFF3F2",
+        }}
+      >
+        <Sidebar
+          menuItems={menuItems}
+          open={sidebarOpen}
+          backgroundColor="#35224A"
+        />{" "}
+        <div>
+        <button onClick={toggleSidebar}>Sidebar</button>
+          <ResponsiveAppBar />
+          <Component {...pageProps} />
+        </div>
     <div
       style={{
         display: "flex",
@@ -34,6 +58,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <Component {...pageProps} />
         <ResponsiveAppBar />
       </div>
+    </div>
     </div>
   );
 };
