@@ -11,6 +11,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import "./SideBar.css";
+import { Box } from "@mui/material";
 
 interface SidebarMenuItem {
   name: string;
@@ -23,12 +24,14 @@ interface SidebarProps {
   menuItems: SidebarMenuItem[];
   open: boolean;
   backgroundColor: string;
+  style: object;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   menuItems,
   open,
   backgroundColor,
+  style,
 }) => {
   const [collapseMenu, setCollapseMenu] = useState<boolean[]>(
     new Array(menuItems.length).fill(false)
@@ -57,8 +60,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div
-      className={`sidebar ${open ? "open" : "closed"}`}
-      style={{ background: backgroundColor, color: "#fff" }}
+      // className={`sidebar ${open ? "open" : "closed"}`}
+      style={{ background: backgroundColor, color: "#fff", ...style }}
     >
       <List sx={{ paddingTop: "1px" }}>
         {menuItems.map((menuItem: any, index: number) => (

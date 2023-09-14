@@ -46,16 +46,16 @@ function ResponsiveAppBar() {
   };
 
   const [isListVisible, setListVisible] = useState(false);
-  const [select, setSelect] = useState('');
+  const [select, setSelect] = useState("");
 
-  const toggleListVisibility = (e : any) => {
+  const toggleListVisibility = (e: any) => {
     setListVisible(!isListVisible);
     setSelect(e.target.value);
   };
 
   return (
     <Box sx={{ "& .MuiPaper-root": { background: "#E2E3E3" } }}>
-      <AppBar position="static" sx={{ width: "85vw", backgroundColor: "fff" }}>
+      <AppBar position="static" sx={{ width: "vw", backgroundColor: "fff" }}>
         <Container maxWidth="lg" disableGutters sx={{ backgroundColor: "fff" }}>
           <Toolbar disableGutters sx={{ backgroundColor: "fff" }}>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -115,12 +115,12 @@ function ResponsiveAppBar() {
               </Typography>
             </Box>
             <Box sx={{ padding: "5px 10px 5px 5px" }}>
-            <Image
-                  src={EarthIcon}
-                  alt="Language-Icon"
-                  height={20}
-                  width={20}
-                />
+              <Image
+                src={EarthIcon}
+                alt="Language-Icon"
+                height={20}
+                width={20}
+              />
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>

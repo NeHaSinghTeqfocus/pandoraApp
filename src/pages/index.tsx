@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import DataGrid from "@/components/DataGrid/DataGrid";
 import { GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Box, Checkbox, Typography } from "@mui/material";
+import { Box, Checkbox, IconButton, Typography } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import DeleteIcon from "@mui/icons-material/Delete";
-import LoopOutlinedIcon from "@mui/icons-material//LoopOutlined";
+import LoopOutlinedIcon from "@mui/icons-material/LoopOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import CheckIcon from "@mui/icons-material/Check";
 import styles from "./page.module.css";
 
 const data = [
@@ -72,6 +74,7 @@ const Home: React.FC = () => {
     []
   );
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [isEditing, setIsEditing] = useState<number | null>(null);
 
   const handleMoreInfo = (id: number) => {};
 
@@ -86,6 +89,18 @@ const Home: React.FC = () => {
       setSelectedRow(id); // Select the clicked row
     }
   };
+  const handleEdit = (id: number) => {
+    setIsEditing(id);
+  };
+
+  const handleSave = (id: number, newName: string) => {
+    setIsEditing(null);
+    const updatedData = tableData.map((row) =>
+      row.id === id ? { ...row, name: newName } : row
+    );
+    setTableData(updatedData);
+  };
+
   const columns: GridColDef[] = [
     {
       field: "id",
@@ -97,9 +112,55 @@ const Home: React.FC = () => {
     {
       field: "name",
       headerName: "Name",
-      align: "left",
-      headerAlign: "left",
-      flex: 0.5,
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          {isEditing === params.row.id ? (
+            <div>
+              <input
+                style={{
+                  height: "30px",
+                  border: "1px solid #e0e0e0",
+                  borderRadius: "4px",
+                }}
+                type="text"
+                value={params.value}
+                onChange={(e) => handleSave(params.row.id, e.target.value)}
+              />
+              <IconButton
+                sx={{
+                  marginLeft: "12px",
+                  border: "1px solid grey",
+                  borderRadius: "50%",
+                  height: "30px",
+                  width: "30px",
+                }}
+                color="primary"
+                onClick={() => handleSave(params.row.id, params.value)}
+              >
+                <CheckIcon sx={{ color: "grey" }} fontSize="small" />
+              </IconButton>
+            </div>
+          ) : (
+            <div>
+              {params.value}
+              <IconButton
+                sx={{
+                  marginLeft: "12px",
+                  border: "1px solid grey",
+                  borderRadius: "50%",
+                  height: "30px",
+                  width: "30px",
+                }}
+                color="primary"
+                onClick={() => handleEdit(params.row.id)}
+              >
+                <EditOutlinedIcon sx={{ color: "grey" }} fontSize="small" />
+              </IconButton>
+            </div>
+          )}
+        </div>
+      ),
     },
     {
       field: "created",
@@ -254,8 +315,8 @@ const Home: React.FC = () => {
     },
   ];
   return (
-    <Box sx={{ width: "80vw" }}>
-      <Box sx={{ width: "100%", height: "400px", mt: 4 }}>
+    <Box display="flex" justifyContent="center" sx={{ width: "100%" }}>
+      <Box sx={{ width: "95%", height: "400px", mt: 4 }}>
         <DataGrid
           rows={tableData}
           columns={columns}
