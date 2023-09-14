@@ -112,7 +112,7 @@ const Home: React.FC = () => {
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
+      flex: 1.5,
       renderCell: (params) => (
         <div>
           {isEditing === params.row.id ? (
@@ -324,7 +324,7 @@ const Home: React.FC = () => {
       <Box ml={5} sx={{ direction: "flex", flexDirection: "row-reverse" }}>
         <Cards />
       </Box>
-      <Box sx={{ width: "95%", height: "400px", mt: 4 }}>
+      <Box sx={{ width: "100%", height: "400px", mt: 4 }}>
         <DataGrid
           rows={tableData}
           columns={columns}
