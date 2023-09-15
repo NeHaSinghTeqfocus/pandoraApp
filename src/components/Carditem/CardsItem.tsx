@@ -29,7 +29,10 @@ button2: {
   '&:hover': {
     backgroundColor: '#DAE0E0',
     color: '#3c52b2',
-}}
+}},
+rtol: {
+  direction: 'rtl',
+}
 })
 export default function Cards() {
   const classes = useStyles()
@@ -39,9 +42,10 @@ export default function Cards() {
         display: "flex",
         flexWrap: "wrap",
         "& > :not(style)": {
-          m: 1,
+          m: 4,
+          ml: -3,
           mt: 3,
-          width: 270,
+          width: 300,
           height: 108,
         },
       }}
@@ -64,7 +68,7 @@ export default function Cards() {
         </Box>
         <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
           <Typography variant="body2" fontWeight={700} color={'#999999'}>Tasks</Typography>
-          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+          <Typography variant="h6" className={classes.rtol} fontWeight={700} color={'#626262'}>5</Typography>
         </Box>
       </Paper>
       <Paper
@@ -85,7 +89,7 @@ export default function Cards() {
         </Box>
         <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
           <Typography variant="body2" fontWeight={700} color={'#999999'}>Datasets</Typography>
-          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+          <Typography variant="h6" className={classes.rtol} fontWeight={700} color={'#626262'} >355</Typography>
         </Box>
       </Paper>
       <Paper
@@ -106,7 +110,7 @@ export default function Cards() {
         </Box>
         <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
           <Typography variant="body2" fontWeight={700} color={'#999999'}>Models</Typography>
-          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+          <Typography variant="h6" className={classes.rtol} fontWeight={700} color={'#626262'}>247</Typography>
         </Box>
       </Paper>
       <Paper
@@ -127,7 +131,7 @@ export default function Cards() {
         </Box>
         <Box  sx={{marginLeft:'120px', marginTop:'30px'}}>
           <Typography variant="body2" fontWeight={700} color={'#999999'}>Features</Typography>
-          <Typography variant="h6" fontWeight={700} color={'#626262'}>500</Typography>
+          <Typography variant="h6" className={classes.rtol} fontWeight={700} color={'#626262'} >8,572</Typography>
         </Box>
       </Paper>
 
