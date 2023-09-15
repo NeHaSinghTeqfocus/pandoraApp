@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Sidebar from "@/components/SideBar/SideBar";
 import menuItems from "../menuItem"; // Correct the import path and variable name
 import MenuIcon from "@mui/icons-material/Menu";
-import AppBar from "@/components/AppBar/AppBar";
 import ResponsiveAppBar from "@/components/AppBar/AppbarMui";
 import { Box } from "@mui/material";
 import GlobalStyles from "../GlobalStyles";
