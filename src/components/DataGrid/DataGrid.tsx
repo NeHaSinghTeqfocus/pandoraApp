@@ -60,8 +60,11 @@ const DataGrid = ({
   initialState,
   name,
   headerHeight,
+  maxSelect,
 
   onRowSelectionModelChange = () => {},
+  disableMultipleSelection = true, // Add the disableMultipleSelection prop with a default value
+  selectionModel, // Add the selectionModel prop
 }: DataGridType) => {
   const [cellModesModel, setCellModesModel] = useState<GridCellModesModel>({});
 
@@ -123,6 +126,15 @@ const DataGrid = ({
     []
   );
 
+  const handleSelectionModelChange = (ids: any) => {
+    if (disableMultipleSelection && ids.length > 1) {
+      // Prevent selecting multiple rows
+      return;
+    }
+
+    onRowSelectionModelChange(ids);
+  };
+
   return (
     <StyledDataGrid
       rows={rows}
@@ -138,6 +150,7 @@ const DataGrid = ({
           lineHeight: "18px",
           // textWrap: "wrap",
           textAlign: "center",
+          borderColor: "#FFF !important",
         },
         "& .MuiDataGrid-cellContent": {
           // color: Colors.primary,
@@ -223,6 +236,8 @@ const DataGrid = ({
       columnHeaderHeight={40}
       cellModesModel={cellModesModel}
       onCellModesModelChange={handleCellModesModelChange}
+      selectionModel={disableMultipleSelection ? [] : selectionModel}
+      onSelectionModelChange={handleSelectionModelChange}
       slots={{
         noRowsOverlay: () => (
           <Stack height="100%" alignItems="center" justifyContent="center">

@@ -87,27 +87,41 @@ const Sidebar: React.FC<SidebarProps> = ({
                         : "",
                   }}
                 >
-                  <ListItemIcon sx={{}}>
-                    <menuItem.icon fontSize="small" sx={{ color: "white" }} />
+                  <ListItemIcon sx={{ minWidth: "31px" }}>
+                    <menuItem.icon
+                      sx={{
+                        color: "white",
+                        fontSize: "15px",
+                      }}
+                    />
                   </ListItemIcon>
                   <ListItemText
                     sx={{
                       color: "white",
                       textDecoration: "none",
-                      fontSize: "14px !important",
+                      fontSize: "12px !important",
+                      fontFamily: "Arial !important",
+                      fontWeight: "400 !important",
                     }}
-                    primary={menuItem.name}
+                    primary={!open ? "" : menuItem.name}
                   />
                 </ListItem>
               </Link>
             ) : (
               <ListItem button onClick={() => handleClick(index)}>
-                <ListItemIcon>
+                <ListItemIcon sx={{ minWidth: "31px" }}>
                   {" "}
-                  <menuItem.icon fontSize="small" sx={{ color: "white" }} />
+                  <menuItem.icon sx={{ color: "white", fontSize: "15px" }} />
                 </ListItemIcon>
-                <ListItemText primary={menuItem.name} />
+                <ListItemText
+                  sx={{
+                    fontFamily: "Arial !important",
+                    fontWeight: "400 !important",
+                  }}
+                  primary={!open ? "" : menuItem.name}
+                />
                 {menuItem.subItems &&
+                  open &&
                   (collapseMenu[index] ? <ExpandLess /> : <ExpandMore />)}
               </ListItem>
             )}
@@ -132,7 +146,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                               : "",
                         }}
                       >
-                        <ListItemIcon sx={{ marginLeft: "12px" }}>
+                        <ListItemIcon
+                          sx={{ marginLeft: "3px", minWidth: "31px" }}
+                        >
                           {
                             <subItem.icon
                               fontSize="small"
@@ -141,8 +157,12 @@ const Sidebar: React.FC<SidebarProps> = ({
                           }
                         </ListItemIcon>
                         <ListItemText
-                          sx={{ fontSize: "10px !important" }}
-                          primary={subItem.name}
+                          sx={{
+                            fontSize: "10px !important",
+                            fontFamily: "Arial !important",
+                            fontWeight: "400 !important",
+                          }}
+                          primary={!open ? "" : subItem.name}
                         />
                       </ListItem>
                     </div>
