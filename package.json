@@ -26,6 +26,7 @@
     "react-drag-drop-files": "^2.3.10",
     "react-dropzone": "^14.2.3",
     "react-sidebar": "^3.0.2",
+    "react-uploader": "^3.41.0",
     "react-spring": "^9.7.2",
     "styled-components": "^6.0.8",
     "typescript": "5.2.2"
