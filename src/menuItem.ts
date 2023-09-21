@@ -29,7 +29,7 @@ const menuItems = [
       {
         name: "DataSet Exploration",
         icon: PlayArrowIcon,
-        path: "/contact",
+        path: "/simon/dataset_exploration",
       },
       {
         name: "Analysis",

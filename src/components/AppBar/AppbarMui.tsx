@@ -13,7 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Image from "next/image";
 import EarthIcon from "../../../public/EarthIcon.png";
-import { useRouter } from 'next/router';
+import Link from "next/link";
+import { useState } from "react";
+import { Card } from "@mui/material";
+import { useRouter } from "next/router";
 
 const pages = ["Dashboard"];
 const settings = ["Dashboard", "Setting", "Logout"];
@@ -114,10 +117,13 @@ function ResponsiveAppBar() {
               { isDashboard?<Button onClick={() => router.push('/workspace')} >{currentUrl}</Button> : ""}
               <Button>{currentUrl}</Button>
             </Box>
-            <Box sx={{ padding: "5px 10px 5px 10px" }}>
+            <Box sx={{ padding: "5px 10px 5px 10px", marginLeft: "-30px" }}>
               <Typography
                 variant="caption"
-                sx={{ background: "#3FD39F", padding: "15px 5px 15px 5px" }}
+                sx={{
+                  background: "#3FD39F",
+                  padding: "15px 5px 15px 5px",
+                }}
               >
                 Please select one file from Workspace to start Analysis
               </Typography>

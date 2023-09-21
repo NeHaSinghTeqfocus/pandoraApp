@@ -40,6 +40,9 @@ interface DataGridType {
   rowHeight?: number;
   name?: string;
   headerHeight?: number;
+  maxSelect?: number;
+  disableMultipleSelection?: any;
+  selectionModel?: any;
 }
 
 export type { ExperimentalFeaturesType, SortModelType, DataGridType };

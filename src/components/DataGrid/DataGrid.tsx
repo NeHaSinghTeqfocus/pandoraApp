@@ -11,11 +11,6 @@ import { DataGridType } from "../DataGrid/DataGrid.type";
 import Stack from "@mui/material/Stack";
 import { useCallback, useState } from "react";
 import "./CustomDataGrid.css"; // Import a CSS file for custom styling
-import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
-import Image from "next/image";
-import LeftArrow from '../../../public/LeftArrow.png'
-import RightArrow from '../../../public/RightArrow.png'
 
 export const StyledDataGrid = styled(MuiDataGrid)(({ theme }) => ({
   background: "#FFFFFF", // Set the background color to white
@@ -65,8 +60,11 @@ const DataGrid = ({
   initialState,
   name,
   headerHeight,
+  maxSelect,
 
   onRowSelectionModelChange = () => {},
+  disableMultipleSelection = true, // Add the disableMultipleSelection prop with a default value
+  selectionModel, // Add the selectionModel prop
 }: DataGridType) => {
   const [cellModesModel, setCellModesModel] = useState<GridCellModesModel>({});
 
@@ -128,124 +126,126 @@ const DataGrid = ({
     []
   );
 
+  const handleSelectionModelChange = (ids: any) => {
+    if (disableMultipleSelection && ids.length > 1) {
+      // Prevent selecting multiple rows
+      return;
+    }
+
+    onRowSelectionModelChange(ids);
+  };
+
   return (
-    <>
-      <StyledDataGrid
-        rows={rows}
-        columns={columns}
-        sx={{
-          ...sx,
-          height: rows.length ? "auto" : 200,
-          "& .MuiDataGrid-columnHeaderTitle": {
-            color: "#909399",
-            fontSize: "11.5px",
-            fontWeight: 500,
-            fontFamily: "Poppins",
-            lineHeight: "18px",
-            // textWrap: "wrap",
-            textAlign: "center",
-          },
-          "& .MuiDataGrid-cellContent": {
-            // color: Colors.primary,
-            fontWeight: 400,
-            lineHeight: "21px",
-            fontFamily: "Poppins",
-            fontSize: "11px",
-            height: 20,
-          },
+    <StyledDataGrid
+      rows={rows}
+      columns={columns}
+      sx={{
+        ...sx,
+        height: rows.length ? "auto" : 200,
+        "& .MuiDataGrid-columnHeaderTitle": {
+          color: "#909399",
+          fontSize: "11.5px",
+          fontWeight: 500,
+          fontFamily: "Poppins",
+          lineHeight: "18px",
+          // textWrap: "wrap",
+          textAlign: "center",
+          borderColor: "#FFF !important",
+        },
+        "& .MuiDataGrid-cellContent": {
+          // color: Colors.primary,
+          fontWeight: 400,
+          lineHeight: "21px",
+          fontFamily: "Poppins",
+          fontSize: "11px",
+          height: 20,
+        },
 
-          "& .MuiDataGrid-row:hover": { backgroundColor: Colors.lightGrey },
-          "& .MuiDataGrid-withBorderColor": {
-            // borderColor: Colors.secondaryGrey,
-            ...(headerHeight && { maxHeight: `${headerHeight}px !important` }),
-          },
-          "& .MuiDataGrid-columnHeader": {
-            // background: Colors.backGroundTableColor,
-          },
+        "& .MuiDataGrid-row:hover": { backgroundColor: Colors.lightGrey },
+        "& .MuiDataGrid-withBorderColor": {
+          // borderColor: Colors.secondaryGrey,
+          ...(headerHeight && { maxHeight: `${headerHeight}px !important` }),
+        },
+        "& .MuiDataGrid-columnHeader": {
+          // background: Colors.backGroundTableColor,
+        },
 
-          "& .MuiDataGrid-menuIcon": {
-            display: "none",
-          },
-          "& .MuiDataGrid-cell--withRenderer": {
-            color: Colors.primary,
+        "& .MuiDataGrid-menuIcon": {
+          display: "none",
+        },
+        "& .MuiDataGrid-cell--withRenderer": {
+          color: Colors.primary,
+          fontSize: "12px",
+        },
+        borderColor: Colors.secondaryGrey,
+        // borderTopLeftRadius: "10px",
+        // borderTopRightRadius: "10px",
+        "& .MuiDataGrid-cell:focus-within": {
+          outline: "none",
+        },
+        "& .Mui-selected": {
+          background: "#ECECFD !important",
+        },
+        "& .MuiCheckbox-root, .Mui-checked": {
+          color: "#e0e0e0",
+          height: 18,
+          width: 18,
+        },
+        "& .Mui-checked": {
+          color: `black !important`,
+        },
+        "& .MuiDataGrid-columnHeaderTitleContainer": {
+          justifyContent: "space-between",
+          borderColor: "#FFF !important",
+          marginLeft: "-2px",
+        },
+        "& .MuiDataGrid-cell--editable": {
+          border: `1px solid ${Colors.primaryGrey}`,
+          borderRadius: 1,
+          maxHeight: "26px !important",
+          minHeight: "26px !important",
+          marginTop: "4px",
+          fontSize: "12px",
+          "& .MuiInputBase-input": {
             fontSize: "12px",
           },
-          borderColor: Colors.secondaryGrey,
-          // borderTopLeftRadius: "10px",
-          // borderTopRightRadius: "10px",
-          "& .MuiDataGrid-cell:focus-within": {
-            outline: "none",
-          },
-          "& .Mui-selected": {
-            background: "#ECECFD !important",
-          },
-          "& .MuiCheckbox-root, .Mui-checked": {
-            color: "#e0e0e0",
-            height: 18,
-            width: 18,
-          },
-          "& .Mui-checked": {
-            color: `black !important`,
-          },
-          "& .MuiDataGrid-columnHeaderTitleContainer": {
-            justifyContent: "space-between",
-            borderColor: "#FFF !important",
-            marginLeft: "-2px",
-          },
-          "& .MuiDataGrid-cell--editable": {
-            border: `1px solid ${Colors.primaryGrey}`,
-            borderRadius: 1,
-            maxHeight: "26px !important",
-            minHeight: "26px !important",
-            marginTop: "4px",
-            fontSize: "12px",
-            "& .MuiInputBase-input": {
-              fontSize: "12px",
-            },
-          },
-          "& .MuiDataGrid-row": {
-            // borderBottom: `1px solid ${Colors.primaryGrey}`,
-          },
-        }}
-        hideFooter={hideFooter}
-        pageSizeOptions={pageSizeOptions}
-        disableColumnFilter={disableColumnFilter}
-        disableColumnMenu={true}
-        // sortModel={sortModel}
-        // onSortModelChange={onSortModelChange}
-        columnVisibilityModel={columnVisibilityModel}
-        disableRowSelectionOnClick={disableRowSelectionOnClick}
-        experimentalFeatures={experimentalFeatures}
-        columnGroupingModel={columnGroupingModel}
-        checkboxSelection={checkboxSelection}
-        initialState={initialState}
-        editMode={editMode}
-        paginationMode={paginationMode}
-        autoHeight={autoHeight}
-        processRowUpdate={processRowUpdate}
-        onRowSelectionModelChange={(ids) => onRowSelectionModelChange(ids)}
-        onCellClick={handleCellClick}
-        rowHeight={rowHeight}
-        columnHeaderHeight={40}
-        cellModesModel={cellModesModel}
-        onCellModesModelChange={handleCellModesModelChange}
-        slots={{
-          noRowsOverlay: () => (
-            <Stack height="100%" alignItems="center" justifyContent="center">
-              No record available
-            </Stack>
-          ),
-        }}
-      />
-      <Box sx={{ padding: "20px 10px 20px 10px", display:'flex'}}>
-        <Typography variant="caption">Table 5</Typography>
-          <Box sx={{ padding: "5px 20px 5px 20px", display:'flex', gap:'30px'}} >
-          <Image src={LeftArrow} alt="LeftArrow" height={10} width={10} />
-          <Typography variant="h6" color={'white'} sx={{backgroundColor:'black', padding:'0px 10px 0px 10px'}}>1</Typography>
-          <Image src={RightArrow} alt="RightArrow" height={10} width={10} />
-          </Box>    
-      </Box>
-    </>
+        },
+        "& .MuiDataGrid-row": {
+          // borderBottom: `1px solid ${Colors.primaryGrey}`,
+        },
+      }}
+      hideFooter={hideFooter}
+      pageSizeOptions={pageSizeOptions}
+      disableColumnFilter={disableColumnFilter}
+      disableColumnMenu={true}
+      // sortModel={sortModel}
+      // onSortModelChange={onSortModelChange}
+      columnVisibilityModel={columnVisibilityModel}
+      disableRowSelectionOnClick={disableRowSelectionOnClick}
+      experimentalFeatures={experimentalFeatures}
+      columnGroupingModel={columnGroupingModel}
+      checkboxSelection={checkboxSelection}
+      initialState={initialState}
+      editMode={editMode}
+      paginationMode={paginationMode}
+      autoHeight={autoHeight}
+      processRowUpdate={processRowUpdate}
+      onRowSelectionModelChange={(ids) => onRowSelectionModelChange(ids)}
+      onCellClick={handleCellClick}
+      rowHeight={rowHeight}
+      columnHeaderHeight={40}
+      cellModesModel={cellModesModel}
+      onCellModesModelChange={handleCellModesModelChange}
+      selectionModel={disableMultipleSelection ? [] : selectionModel}
+      onSelectionModelChange={handleSelectionModelChange}
+      slots={{
+        noRowsOverlay: () => (
+          <Stack height="100%" alignItems="center" justifyContent="center">
+            No record available
+          </Stack>
+        ),
+      }}
+    />
   );
 };
 

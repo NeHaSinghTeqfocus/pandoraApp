@@ -13,6 +13,7 @@
     "@mui/icons-material": "^5.14.8",
     "@mui/material": "^5.14.9",
     "@mui/styles": "^5.14.7",
+    "@mui/system": "^5.14.10",
     "@mui/x-data-grid": "^6.13.0",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
@@ -26,6 +27,7 @@
     "react-dropzone": "^14.2.3",
     "react-sidebar": "^3.0.2",
     "react-uploader": "^3.41.0",
+    "react-spring": "^9.7.2",
     "styled-components": "^6.0.8",
     "typescript": "5.2.2"
   },
