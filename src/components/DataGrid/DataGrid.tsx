@@ -243,8 +243,7 @@ const DataGrid = ({
           <Image src={LeftArrow} alt="LeftArrow" height={10} width={10} />
           <Typography variant="h6" color={'white'} sx={{backgroundColor:'black', padding:'0px 10px 0px 10px'}}>1</Typography>
           <Image src={RightArrow} alt="RightArrow" height={10} width={10} />
-          </Box>
-          
+          </Box>    
       </Box>
     </>
   );

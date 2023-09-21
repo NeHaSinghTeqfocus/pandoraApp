@@ -11,17 +11,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import Image from "next/image";
 import EarthIcon from "../../../public/EarthIcon.png";
-import Link from "next/link";
-import { useState } from "react";
-import { Card } from "@mui/material";
 import { useRouter } from 'next/router';
 
 const pages = ["Dashboard"];
 const settings = ["Dashboard", "Setting", "Logout"];
 const Language = ["Arbic", "Hindi", "English", "Brazil", "Chineese"];
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -49,6 +46,7 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+
   };
 
   const handleCloseUserMenu = () => {
@@ -57,7 +55,7 @@ function ResponsiveAppBar() {
 
   const router = useRouter();
   const currentUrl = router.asPath; // Get the current URL
-
+  const isDashboard = router.pathname === '/about';
 
   return (
     <Box sx={{ "& .MuiPaper-root": { background: "#FBFBFB" } }}>
@@ -72,6 +70,7 @@ function ResponsiveAppBar() {
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
+                // onAuxClick={handleclickRoute}
               >
                 <MenuIcon />
               </IconButton>
@@ -107,11 +106,12 @@ function ResponsiveAppBar() {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "black", display: "block" }}
+                  sx={{ my: 2, color: "black", display: "block", textTransform: "none", }}
                 >
                   {page}
                 </Button>
               ))}
+              { isDashboard?<Button onClick={() => router.push('/workspace')} >{currentUrl}</Button> : ""}
               <Button>{currentUrl}</Button>
             </Box>
             <Box sx={{ padding: "5px 10px 5px 10px" }}>

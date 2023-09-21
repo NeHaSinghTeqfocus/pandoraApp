@@ -20,7 +20,7 @@ const menuItems = [
   {
     name: "Workspace",
     icon: Diversity1Icon,
-    path: "/about",
+    path: "/workspace",
   },
   {
     name: "SIMON",
