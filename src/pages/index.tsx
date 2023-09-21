@@ -492,12 +492,12 @@ const Home: React.FC = () => {
             minHeight: "34px",
             position: "relative",
             top: "-58px",
-            left: "432px",
+            left: "70px",
             backgroundColor: "#E3006E",
             color: "white",
             borderRadius: 0,
             border: 0,
-            padding: "3px 12px",
+            padding: "4px 12px",
             overflowX: "hidden",
             "& .MuiAlert-icon": {
               display: "none", // Hide the icon
@@ -521,7 +521,7 @@ const Home: React.FC = () => {
         </Alert>
       )}
       <Box
-        sx={{ direction: "flex", width: "95%", justifyContent: "flex-start" }}
+        sx={{ direction: "flex", width: "100%", justifyContent: "flex-start" }}
       >
         <Cards />
       </Box>

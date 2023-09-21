@@ -30,6 +30,9 @@ const useStyles = makeStyles({
       color: "#3c52b2",
     },
   },
+  rtol: {
+    direction: "rtl",
+  },
 });
 export default function Cards() {
   const classes = useStyles();
@@ -81,8 +84,9 @@ export default function Cards() {
         flexWrap: "wrap",
         "& > :not(style)": {
           m: 1,
+          ml: 1.5,
           mt: 3,
-          width: 270,
+          width: 290,
           height: 108,
         },
       }}
@@ -107,7 +111,12 @@ export default function Cards() {
           <Typography variant="body2" fontWeight={700} color={"#999999"}>
             Tasks
           </Typography>
-          <Typography variant="h6" fontWeight={700} color={"#626262"}>
+          <Typography
+            variant="h6"
+            className={classes.rtol}
+            fontWeight={700}
+            color={"#626262"}
+          >
             {stats.tasks}
           </Typography>
         </Box>
@@ -132,7 +141,12 @@ export default function Cards() {
           <Typography variant="body2" fontWeight={700} color={"#999999"}>
             Datasets
           </Typography>
-          <Typography variant="h6" fontWeight={700} color={"#626262"}>
+          <Typography
+            variant="h6"
+            className={classes.rtol}
+            fontWeight={700}
+            color={"#626262"}
+          >
             {stats.datasets}
           </Typography>
         </Box>
@@ -157,7 +171,12 @@ export default function Cards() {
           <Typography variant="body2" fontWeight={700} color={"#999999"}>
             Models
           </Typography>
-          <Typography variant="h6" fontWeight={700} color={"#626262"}>
+          <Typography
+            variant="h6"
+            className={classes.rtol}
+            fontWeight={700}
+            color={"#626262"}
+          >
             {stats.models}
           </Typography>
         </Box>
@@ -182,7 +201,12 @@ export default function Cards() {
           <Typography variant="body2" fontWeight={700} color={"#999999"}>
             Features
           </Typography>
-          <Typography variant="h6" fontWeight={700} color={"#626262"}>
+          <Typography
+            variant="h6"
+            className={classes.rtol}
+            fontWeight={700}
+            color={"#626262"}
+          >
             {stats.features}
           </Typography>
         </Box>

@@ -1,11 +1,11 @@
 import React from "react";
-// import FileUploader from '@/components/fileupload/FileUpload'
+import DragDrop from '@/components/FileUpload/FileUpload'
 
 const About = () => {
   return (
     <>
       <h1>Workplace</h1>
-      {/* <FileUploader /> */}
+      <DragDrop />
     </>
   );
 };

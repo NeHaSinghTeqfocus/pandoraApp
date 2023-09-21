@@ -17,6 +17,7 @@ import EarthIcon from "../../../public/EarthIcon.png";
 import Link from "next/link";
 import { useState } from "react";
 import { Card } from "@mui/material";
+import { useRouter } from "next/router";
 
 const pages = ["Dashboard"];
 const settings = ["Dashboard", "Setting", "Logout"];
@@ -29,12 +30,21 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [anchorLngUser, setAnchorLngUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+  const handleOpenLanguage = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorLngUser(event.currentTarget);
+  };
+  const handleCloseLanguage = () => {
+    setAnchorLngUser(null);
   };
 
   const handleCloseNavMenu = () => {
@@ -45,16 +55,11 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const [isVisible, setVisible] = useState(false);
-  const [select, setSelect] = useState("");
-
-  const handleSelect = (e: any) => {
-    setVisible(!isVisible);
-    setSelect(e.target.value);
-  };
+  const router = useRouter();
+  const currentUrl = router.asPath; // Get the current URL
 
   return (
-    <Box sx={{ "& .MuiPaper-root": { background: "#E2E3E3" } }}>
+    <Box sx={{ "& .MuiPaper-root": { background: "#FBFBFB" } }}>
       <AppBar position="static" sx={{ width: "vw", backgroundColor: "fff" }}>
         <Container maxWidth="lg" disableGutters sx={{ backgroundColor: "fff" }}>
           <Toolbar disableGutters sx={{ backgroundColor: "fff" }}>
@@ -106,18 +111,23 @@ function ResponsiveAppBar() {
                   {page}
                 </Button>
               ))}
+              <Button>{currentUrl}</Button>
             </Box>
-            <Box sx={{ padding: "5px 10px 5px 10px" }}>
+            <Box sx={{ padding: "5px 10px 5px 10px", marginLeft: "-30px" }}>
               <Typography
-                sx={{ background: "#00DBDB", padding: "10px 5px 5px 5px" }}
+                variant="caption"
+                sx={{
+                  background: "#3FD39F",
+                  padding: "15px 5px 15px 5px",
+                }}
               >
                 Please select one file from Workspace to start Analysis
               </Typography>
             </Box>
             <Box sx={{ padding: "5px 10px 5px 5px" }}>
-              <Tooltip title="Language">
+              <Tooltip title="Languages">
                 <IconButton
-                  onClick={handleOpenUserMenu}
+                  onClick={handleOpenLanguage}
                   sx={{ p: 0, color: "black" }}
                 >
                   <Image
@@ -131,7 +141,7 @@ function ResponsiveAppBar() {
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
-                anchorEl={anchorElUser}
+                anchorEl={anchorLngUser}
                 anchorOrigin={{
                   vertical: "top",
                   horizontal: "right",
@@ -141,12 +151,14 @@ function ResponsiveAppBar() {
                   vertical: "top",
                   horizontal: "right",
                 }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                open={Boolean(anchorLngUser)}
+                onClose={handleCloseLanguage}
               >
                 {Language.map((Language) => (
-                  <MenuItem key={Language} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{Language}</Typography>
+                  <MenuItem key={Language} onClick={handleCloseLanguage}>
+                    <Typography variant="subtitle2" textAlign="center">
+                      {Language}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -158,7 +170,11 @@ function ResponsiveAppBar() {
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0, color: "black" }}
                 >
-                  <Avatar alt="Kunal singh" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    sx={{ backgroundColor: "gray" }}
+                    alt="Kunal singh"
+                    src="/static/images/avatar/2.jpg"
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

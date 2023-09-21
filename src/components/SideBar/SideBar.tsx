@@ -10,7 +10,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import "./SideBar.css";
 import { Box } from "@mui/material";
 
 interface SidebarMenuItem {
@@ -61,7 +60,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <div
       // className={`sidebar ${open ? "open" : "closed"}`}
-      style={{ background: backgroundColor, color: "#fff", ...style }}
+      style={{
+        background: backgroundColor,
+        color: "#fff",
+        width: "315px !important",
+        ...style,
+      }}
     >
       <List sx={{ paddingTop: "1px" }}>
         {menuItems.map((menuItem: any, index: number) => (
@@ -134,14 +138,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                       <ListItem
                         button
                         onClick={() => handleSubItemClick(subItem.path)}
-                        selected={
-                          subItem.path === router.pathname &&
-                          menuItem.path === router.pathname
-                        }
+                        selected={subItem.path === router.pathname}
                         style={{
                           borderLeft:
-                            subItem.path === router.pathname &&
-                            menuItem.path === router.pathname
+                            subItem.path === router.pathname
                               ? "5px solid #E3006E"
                               : "",
                         }}
