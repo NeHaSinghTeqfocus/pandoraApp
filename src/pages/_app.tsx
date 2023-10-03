@@ -6,6 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ResponsiveAppBar from "@/components/AppBar/AppbarMui";
 import { Box } from "@mui/material";
 import GlobalStyles from "../GlobalStyles";
+import InvertedMenu from "@/icon/InvertedMenuIcon";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -52,15 +53,33 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         }}
       >
         <ResponsiveAppBar />
-        <MenuIcon
-          sx={{
-            position: "absolute",
-            top: 22,
-            zIndex: 999,
-            cursor: "pointer",
-          }}
-          onClick={toggleSidebar}
-        />
+        {sidebarOpen ? (
+          <MenuIcon
+            sx={{
+              padding: "1.5px",
+              fontSize: "30px",
+              color: "#000",
+              position: "absolute",
+              top: 17,
+              zIndex: 999,
+              cursor: "pointer",
+            }}
+            onClick={toggleSidebar}
+          />
+        ) : (
+          <InvertedMenu
+            style={{
+              color: "#000",
+              padding: "1.5px",
+              position: "absolute",
+              top: 17,
+              zIndex: 999,
+              cursor: "pointer",
+            }}
+            onClick={toggleSidebar}
+          />
+        )}
+
         <GlobalStyles />
         <Component {...pageProps} />
       </Box>

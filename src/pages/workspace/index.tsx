@@ -27,10 +27,11 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import DeleteIcon from '@mui/icons-material/Delete';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import On from '../../../public/On.png';
-import Off from '../../../public/Off.png';
+import DeleteIcon from "@mui/icons-material/Delete";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import On from "../../../public/On.png";
+import Off from "../../../public/Off.png";
+import { handleFileUpload } from "@/utils/helper_functions";
 
 const style = {
   position: "absolute" as "absolute",
@@ -177,33 +178,33 @@ const About = () => {
     setAge(event.target.value);
   };
 
-const handleSorting = () => {
-  if (sortingOption === "name") {
-    // Sort by name in ascending order
-    const sortedByName = [...FileArr].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-    setSortedFileArr(sortedByName);
-  } else if (sortingOption === "size") {
-    // Sort by size in ascending order (assuming size is a string)
-    const sortedBySize = [...FileArr].sort((a, b) =>
-      parseInt(a.size) - parseInt(b.size)
-    );
-    setSortedFileArr(sortedBySize);
-  }
-};
+  const handleSorting = () => {
+    if (sortingOption === "name") {
+      // Sort by name in ascending order
+      const sortedByName = [...FileArr].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      setSortedFileArr(sortedByName);
+    } else if (sortingOption === "size") {
+      // Sort by size in ascending order (assuming size is a string)
+      const sortedBySize = [...FileArr].sort(
+        (a, b) => parseInt(a.size) - parseInt(b.size)
+      );
+      setSortedFileArr(sortedBySize);
+    }
+  };
 
   return (
     <>
       <Box sx={{ padding: "0px 10px 20px 10px" }}>
-      <Button
+        <Button
           onClick={() => {
             router.push("/");
           }}
           sx={{
             height: "41px",
             width: "120px",
-            marginTop:'15px',
+            marginTop: "15px",
             backgroundColor: "#35224a",
             color: "white",
             textTransform: "none",
@@ -219,8 +220,8 @@ const handleSorting = () => {
             router.push("/workspace");
           }}
           sx={{
-            marginLeft:'10px',
-            marginTop:'15px',
+            marginLeft: "10px",
+            marginTop: "15px",
             height: "41px",
             width: "120px",
             backgroundColor: "#35224a",
@@ -251,13 +252,13 @@ const handleSorting = () => {
               fontSize: "11px",
               borderRadius: "12px",
               textTransform: "none",
-              gap:'8px',
+              gap: "8px",
               ":hover": {
                 backgroundColor: "#5D4E6E",
               },
             }}
           >
-            <HelpOutlineIcon sx={{ height:'18px', width:'18px'}} />
+            <HelpOutlineIcon sx={{ height: "18px", width: "18px" }} />
             Public Import
           </Button>
           <Button
@@ -271,13 +272,13 @@ const handleSorting = () => {
               fontSize: "11px",
               borderRadius: "12px",
               textTransform: "none",
-              gap:'8px',
+              gap: "8px",
               ":hover": {
                 backgroundColor: "#5D4E6E",
               },
             }}
           >
-            <DeleteIcon sx={{ height:'15px', width:'15px'}} />
+            <DeleteIcon sx={{ height: "15px", width: "15px" }} />
             Delete all
           </Button>
         </Box>
@@ -426,13 +427,16 @@ const handleSorting = () => {
                           }}
                         >
                           ID
-                          <Box sx={{direction:'flex', flexDirection:'column'}} >
-                          <IconButton >
-                            <ArrowDropUpIcon />
-                          </IconButton>
-                          <IconButton>
-                           <ArrowDropDownIcon />
-                          </IconButton></Box>
+                          <Box
+                            sx={{ direction: "flex", flexDirection: "column" }}
+                          >
+                            <IconButton>
+                              <ArrowDropUpIcon />
+                            </IconButton>
+                            <IconButton>
+                              <ArrowDropDownIcon />
+                            </IconButton>
+                          </Box>
                         </TableCell>
                         <TableCell
                           align="right"
@@ -504,15 +508,31 @@ const handleSorting = () => {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <TableCell sx={{fontSize:'12px'}} component="th" scope="row">
+                          <TableCell
+                            sx={{ fontSize: "12px" }}
+                            component="th"
+                            scope="row"
+                          >
                             {row.name}
                           </TableCell>
-                          <TableCell sx={{fontSize:'12px'}} align="right">{row.calories}</TableCell>
-                          <TableCell align="right" sx={{fontSize:'12px'}}>{row.fat}</TableCell>
-                          <TableCell align="right" sx={{fontSize:'12px'}}>{row.carbs}</TableCell>
-                          <TableCell align="right" sx={{fontSize:'12px'}}>{row.protein}</TableCell>
-                          <TableCell align="right" sx={{fontSize:'12px'}}>{row.carbs}</TableCell>
-                          <TableCell align="right" sx={{fontSize:'12px'}}>{row.protein}</TableCell>
+                          <TableCell sx={{ fontSize: "12px" }} align="right">
+                            {row.calories}
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontSize: "12px" }}>
+                            {row.fat}
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontSize: "12px" }}>
+                            {row.carbs}
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontSize: "12px" }}>
+                            {row.protein}
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontSize: "12px" }}>
+                            {row.carbs}
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontSize: "12px" }}>
+                            {row.protein}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -592,42 +612,46 @@ const handleSorting = () => {
             </Box>
           </Modal>
         </Box>
-        <Box sx={{display:'flex', justifyContent:'flex-end'}}>
-          <FormControl sx={{ marginTop:'20px', minWidth: 120 }}>
-                  <Select
-                    sx={{ height: "28px", width: "100px", fontSize: "14px" }}
-                    value={sortingOption}
-                    onChange={(event) => {
-                      setSortingOption(event.target.value);
-                      handleSorting(); // Call the sorting function when the option changes
-                    }}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem
-                      value=""
-                      sx={{ fontSize: "14px", height: "38px" }}
-                    >Select
-                    </MenuItem>
-                    <MenuItem
-                      value="name"
-                      sx={{ fontSize: "14px", height: "38px" }}
-                    >Size
-                    </MenuItem>
-                    <MenuItem
-                      value="size"
-                      sx={{ fontSize: "14px", height: "38px" }}
-                    >
-                      Name
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                <Typography variant="body1" sx={{marginTop:'20px', marginRight:'9px'}}>DSCE</Typography>
-                <IconButton size="small"><Image src={On} alt="toggle-on" height={50} width={50} /></IconButton>
-                <Typography variant="body1" sx={{marginTop:'20px', marginLeft:'6px'}}>ASC</Typography>
-
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <FormControl sx={{ marginTop: "20px", minWidth: 120 }}>
+            <Select
+              sx={{ height: "28px", width: "100px", fontSize: "14px" }}
+              value={sortingOption}
+              onChange={(event) => {
+                setSortingOption(event.target.value);
+                handleSorting(); // Call the sorting function when the option changes
+              }}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value="" sx={{ fontSize: "14px", height: "38px" }}>
+                Select
+              </MenuItem>
+              <MenuItem value="name" sx={{ fontSize: "14px", height: "38px" }}>
+                Size
+              </MenuItem>
+              <MenuItem value="size" sx={{ fontSize: "14px", height: "38px" }}>
+                Name
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            sx={{ marginTop: "20px", marginRight: "9px" }}
+          >
+            DSCE
+          </Typography>
+          <IconButton size="small">
+            <Image src={On} alt="toggle-on" height={50} width={50} />
+          </IconButton>
+          <Typography
+            variant="body1"
+            sx={{ marginTop: "20px", marginLeft: "6px" }}
+          >
+            ASC
+          </Typography>
         </Box>
-        <Box sx={{backgroundColor:'white', mt:3, width:'1270px'}}>
+        <Box sx={{ backgroundColor: "white", mt: 3, width: "1000" }}>
           {sortedFileArr.map((file, index) => (
             <Button key={index} sx={{ textTransform: "lowercase" }}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -639,7 +663,7 @@ const handleSorting = () => {
                     backgroundColor: "#F24773 ",
                     marginTop: "5px",
                     fontSize: "12px",
-                    fontWeight:'700'
+                    fontWeight: "700",
                   }}
                 >
                   {file.size}

@@ -19,6 +19,8 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/styled-components": "^5.1.27",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
     "material-ui-popup-state": "^5.0.9",
     "next": "13.4.19",
     "react": "18.2.0",
@@ -26,8 +28,8 @@
     "react-drag-drop-files": "^2.3.10",
     "react-dropzone": "^14.2.3",
     "react-sidebar": "^3.0.2",
-    "react-uploader": "^3.41.0",
     "react-spring": "^9.7.2",
+    "react-uploader": "^3.43.0",
     "styled-components": "^6.0.8",
     "typescript": "5.2.2"
   },

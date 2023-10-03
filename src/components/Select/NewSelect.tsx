@@ -5,10 +5,13 @@ import React, { useState } from "react";
 import { TextField, Tooltip } from "@mui/material";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 
-const NewSelect = ({ type, main_title, dropvalues, marginY }) => {
+const NewSelect = ({ main_title, dropvalues, marginY, setSelectCol }) => {
   const [showPlaceholder, setShowPlaceholder] = useState(false);
-  const handleOptions = (option: any) => {
-    return (option = option.title);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleOnChange = (e, value) => {
+    setSelectedOptions(value); // Update selected options
+    setSelectCol(value); // Call the provided onChange callback
   };
 
   return (
@@ -25,33 +28,59 @@ const NewSelect = ({ type, main_title, dropvalues, marginY }) => {
       </span>
       <Autocomplete
         sx={{
+          display: "flex",
+          flexWrap: "wrap",
+
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: "black !important",
+              border: "1px solid",
+            },
           "& .MuiAutocomplete-inputRoot": {
             // padding: "5px",
-            // height: "32px",
+            height: "fit-content",
             fontSize: "13px",
-            padding: "4px 4px 7.5px 5px",
+            // padding: "8px 18px",
             // margin: "5px 0px",
+            borderRadius: "5px",
           },
-          // "& .MuiAutocomplete-input": {},
+
+          "& .MuiInputBase-input": {
+            padding: "0px !important",
+          },
+          "& .MuiInputBase-root": {
+            borderColor: "black !important",
+          },
           "& .MuiAutocomplete-endAdornment": {
             display: "none",
+          },
+          "& .MuiAutocomplete-tag": {
+            color: "#9D93A5",
           },
         }}
         multiple
         id="tags-outlined"
         options={dropvalues}
-        getOptionLabel={handleOptions}
+        onChange={handleOnChange}
+        value={selectedOptions}
         // defaultValue={[top100Films[13]]}
-        filterSelectedOptions
+        // filterSelectedOptions
         renderInput={(params) => (
           <TextField
             {...params}
             sx={{
               "& .MuiChip-label": {
-                fontSize: "12px",
+                fontSize: "11px",
+              },
+              "& .MuiChip-deleteIcon": {
+                fontSize: "12px !important",
+                color: "#909399 !important",
+              },
+              "& .MuiChip-filled": {
+                height: "27px",
               },
             }}
-            placeholder="Type to search"
+            placeholder={selectedOptions.length === 0 ? "Type to search" : ""}
           />
         )}
       />

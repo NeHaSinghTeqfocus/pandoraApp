@@ -26,6 +26,17 @@ const Counter = ({
       }
     }
   };
+  const incrementFontSize = () => {
+    if (value < max) {
+      setValue(value + 1);
+    }
+  };
+
+  const decrementFontSize = () => {
+    if (value > min) {
+      setValue(value - 1);
+    }
+  };
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number);
   };
@@ -48,16 +59,19 @@ const Counter = ({
             }}
             value={value}
             max={max}
+            min={min}
             onChange={handleChange}
             // aria-label="Disabled slider"
           />
         ) : null}
         <ButtonGroup variant="outlined" aria-label="outlined button group">
           <Button onClick={() => CounterFn("sub")}>-</Button>
-          <Button disableRipple sx={{ color: "black" }}>
+          <Button disabled={disabled} disableRipple sx={{ color: "black" }}>
             {value}
           </Button>
-          <Button onClick={() => CounterFn("add")}>+</Button>
+          <Button disabled={disabled} onClick={() => CounterFn("add")}>
+            +
+          </Button>
         </ButtonGroup>
       </Box>
     </Stack>
