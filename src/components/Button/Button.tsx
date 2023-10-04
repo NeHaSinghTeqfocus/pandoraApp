@@ -15,6 +15,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   color = "white",
   backgroundColor = "#F78989",
   borderRadius = "50px",
+
   onClick,
 }) => {
   const theme = useTheme();
@@ -22,10 +23,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   return (
     <Button
       sx={{
+        marginLeft: "110px",
+        padding: "5px 10px",
         fontSize,
         color,
         backgroundColor,
         borderRadius,
+
         "&:hover": {
           backgroundColor,
         },

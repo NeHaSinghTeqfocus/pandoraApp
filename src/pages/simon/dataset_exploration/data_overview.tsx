@@ -8,6 +8,8 @@ import CustomButton from "@/components/Button/Button";
 import ChartComponent from "@/components/Graphs/DataOverview/DataOverview";
 import ExportToCsv from "@/components/ExportToCsv/ExportToCsv";
 import PlotIcon from "@/icon/PlotGrowIcon";
+import colorData from "../../../utils/colorData.json";
+import themeColors from "../../../utils/themeColor.json";
 
 const DataOverview = ({ rotation, opacity }) => {
   const [sisa, setSisa] = useState([]);
@@ -20,18 +22,33 @@ const DataOverview = ({ rotation, opacity }) => {
 
   const marginY = 3;
 
-  const theme_data = ["Ten", "twenty", "thirty"];
-  const color_data = ["black", "red", "blue", "green", "yellow"];
-
-  const [selected, setSelected] = useState("");
+  const color_data = colorData.map((colors) => colors.value);
+  const theme_data = themeColors.map((colors) => colors.name);
+  // Create a function to map color name to hexValue
+  useEffect(() => {
+    const mapping = {};
+    colorData.forEach((colors) => {
+      mapping[colors.value] = colors.color;
+    });
+    setColorDataMapping(mapping);
+  }, []);
+  useEffect(() => {
+    const mapping = {};
+    themeColors.forEach((colors) => {
+      mapping[colors.name] = colors.color;
+    });
+    setThemeDataMapping(mapping);
+  }, []);
+  const [selectedColorName, setSelectedColorName] = useState(color_data[0]);
+  const [colorDataMapping, setColorDataMapping] = useState({});
+  const [theme, setTheme] = useState(theme_data[0]);
+  const [themeDataMapping, setThemeDataMapping] = useState({});
+  const [selected, setSelected] = useState([]);
   const [preproces, setPreprocess] = useState(true);
-  const [theme, setTheme] = useState("");
-  const [color, setColor] = useState(color_data[0]);
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(5);
   const [fontsize, setFontSize] = useState(12);
   const [plotratio, setPlotRatio] = useState(1);
   const [isPlotImage, setIsPlotImage] = useState(false);
-  const [imageURL, setImageURL] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const [titles, setTitles] = useState([]);
@@ -63,8 +80,21 @@ const DataOverview = ({ rotation, opacity }) => {
 
     return ans;
   };
+  useEffect(() => {
+    console.log("in useEffect", selected);
+    const updatedSelected = selected;
+  }, [selected]);
+  const handlePlotImage = () => {
+    // console.log(selected, "select");
+    // console.log(col, "col");
+    // console.log(selected.length, "selected length");
+    // console.log(col.length, "col length");
 
-  const handlePlotImage = async () => {
+    if (selected.length == 0 && col.length > 0) {
+      setSelected(col);
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     setTitles([]);
     setxAxis([]);
@@ -72,26 +102,30 @@ const DataOverview = ({ rotation, opacity }) => {
     setGrid([]);
     setSeries([]);
 
-    var col_data = {};
-    var grid_val = [];
-    var xaxis_val = [];
-    var yaxis_val = [];
-    var title_val = [];
-    var series_val = [];
-    for (var i = 0; i < selected.length; i++) {
-      var records = sisa.map((ele) => parseFloat(ele[selected[i]]));
-      var minimum = Math.min(...records);
-      var maximum = Math.max(...records);
-      var ans = divideArray(
+    const columnsToPlot = selected.length > 0 ? selected : col;
+
+    // try {
+    const col_data = {};
+    const grid_val = [];
+    const xaxis_val = [];
+    const yaxis_val = [];
+    const title_val = [];
+    const series_val = [];
+    // const columnsToPlot = selected.length === 0 ? col : selected;
+    for (let i = 0; i < columnsToPlot.length; i++) {
+      // Assuming sisa and selected are defined elsewhere in your code
+      const records = sisa.map((ele) => parseFloat(ele[columnsToPlot[i]]));
+      const minimum = Math.min(...records);
+      const maximum = Math.max(...records);
+      const ans = divideArray(
         records,
         parseInt(records.length / 100),
         records.length
       );
 
-      var age_summary = [];
-      for (var t = 0; t < 100; t++) {
-        var summary = {};
-        summary = {
+      const age_summary = [];
+      for (let t = 0; t < 100; t++) {
+        const summary = {
           start: Math.min(...ans[t]) - minimum,
           draw: Math.max(...ans[t]) / 2,
           min: Math.min(...ans[t]),
@@ -102,23 +136,28 @@ const DataOverview = ({ rotation, opacity }) => {
       }
       col_data[selected[i]] = age_summary;
 
-      var shift_left = (100 / selected.length).toFixed(2);
+      const shift_left = (100 / selected.length).toFixed(2);
 
       title_val.push({
         text: selected[i],
         top: 0,
         left:
           i === 0
-            ? shift_left / 2 - Math.round(selected[i].length / 2) + "%"
-            : shift_left * i +
-              shift_left / 2 -
-              Math.round(selected[i].length / 2) +
-              "%",
+            ? `${shift_left / 2 - Math.round(selected[i].length / 2)}%`
+            : `${
+                shift_left * i +
+                shift_left / 2 -
+                Math.round(selected[i].length / 2)
+              }%`,
+        textStyle: {
+          fontSize: 12,
+          fontWeight: 600, // Adjust the font size as needed
+        },
       });
 
       grid_val.push({
         show: "true",
-        backgroundColor: "#F0F0F0",
+        backgroundColor: themeDataMapping[theme],
         top: 30,
         width: String(shift_left + "%"),
         bottom: 0,
@@ -133,10 +172,11 @@ const DataOverview = ({ rotation, opacity }) => {
           : { type: "category", gridIndex: i, show: false }
       );
 
+      // Pushing multiple series objects for each selected item
       series_val.push(
         {
           type: "bar",
-          color: "transparent",
+          color: colorDataMapping[selectedColorName],
           stack: selected[i],
           xAxisIndex: i,
           yAxisIndex: i,
@@ -150,7 +190,7 @@ const DataOverview = ({ rotation, opacity }) => {
         },
         {
           type: "bar",
-          color: "#4494C3",
+          color: colorDataMapping[selectedColorName],
           stack: selected[i],
           xAxisIndex: i,
           yAxisIndex: i,
@@ -161,7 +201,7 @@ const DataOverview = ({ rotation, opacity }) => {
         },
         {
           type: "bar",
-          color: "#195080",
+          color: colorDataMapping[selectedColorName],
           stack: selected[i],
           xAxisIndex: i,
           yAxisIndex: i,
@@ -172,13 +212,10 @@ const DataOverview = ({ rotation, opacity }) => {
         },
         {
           type: "bar",
-          color: "#4494C3",
+          color: colorDataMapping[selectedColorName],
           stack: selected[i],
           xAxisIndex: i,
           yAxisIndex: i,
-          // label: {
-          //   show: true
-          // },
           emphasis: {
             focus: "series",
           },
@@ -194,25 +231,13 @@ const DataOverview = ({ rotation, opacity }) => {
     setSeries(series_val);
     setIsPlotImage(true);
     setIsLoading(false);
-
-    // setIsLoading(true);
-    // try {
-    //   const response = await fetch(
-    //     "https://run.mocky.io/v3/d13707f7-0511-48df-9fa7-05d025c2b31c"
-    //   );
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     setImageURL(data.image_png);
-    //     setIsPlotImage(true);
-    //   } else {
-    //     console.error("Failed to fetch image URL");
-    //   }
     // } catch (error) {
-    //   console.error("Error fetching image URL:", error);
+    //   console.error("Error:", error);
     // } finally {
     //   setIsLoading(false);
     // }
   };
+
   const prepareDataForCSV = () => {
     const csvData = [];
 
@@ -234,7 +259,7 @@ const DataOverview = ({ rotation, opacity }) => {
   return (
     <Box>
       <Grid p={2} container style={{ backgroundColor: "white" }}>
-        <Grid item md={4} sm={4}>
+        <Grid item md={3} sm={3}>
           <NewSelect
             main_title="Columns"
             dropvalues={col}
@@ -242,10 +267,12 @@ const DataOverview = ({ rotation, opacity }) => {
             setSelectCol={setSelected}
           />
           <Counter
+            isNColumn
             main_title="First (n) columns"
             value={counter}
             setValue={setCounter}
             max={sisa?.length}
+            min={5}
             marginY={marginY}
           />
           <Switch
@@ -256,7 +283,7 @@ const DataOverview = ({ rotation, opacity }) => {
           />
           <hr
             style={{
-              width: "270px",
+              width: "200px",
               height: "1px",
               backgroundColor: "rgba(0,0,0,0.2)",
               border: 0,
@@ -267,15 +294,19 @@ const DataOverview = ({ rotation, opacity }) => {
             main_title="Theme"
             options={theme_data}
             value={theme}
-            setValue={setTheme}
+            setValue={(colorName) => {
+              setTheme(colorName);
+            }}
             defaultValue={0}
             marginY={marginY}
           />
           <CustomSelect
             main_title="Color"
             options={color_data}
-            value={color}
-            setValue={setColor}
+            value={selectedColorName}
+            setValue={(colorName) => {
+              setSelectedColorName(colorName);
+            }}
             marginY={marginY}
           />
           <Counter
@@ -293,7 +324,7 @@ const DataOverview = ({ rotation, opacity }) => {
             max={100}
             marginY={marginY}
           />
-          <CustomButton
+          {/* <CustomButton
             onClick={() => {
               setTitles([]);
               setxAxis([]);
@@ -302,12 +333,13 @@ const DataOverview = ({ rotation, opacity }) => {
               setSeries([]);
               handlePlotImage();
             }}
-          />
+          /> */}
+          <CustomButton onClick={handlePlotImage} />
         </Grid>
 
-        <Grid item md={8} sm={8}>
+        <Grid item md={9} sm={9} style={{ overflow: "auto" }}>
           {isPlotImage ? (
-            <Box>
+            <Box style={{ width: "100%", maxWidth: "100%" }}>
               <Typography>
                 The tableplot is a visualization method that is used to explore
                 and analyze large datasets, is able to display the aggregated
@@ -320,7 +352,14 @@ const DataOverview = ({ rotation, opacity }) => {
                 label="Download CSV"
               />
 
-              <Card sx={{ marginTop: "15px", width: "100%", height: "500px" }}>
+              <Card
+                sx={{
+                  marginTop: "15px",
+                  width: "100%",
+                  maxWidth: "100%",
+                  height: "500px",
+                }}
+              >
                 {isLoading ? (
                   <div>Loading...</div>
                 ) : (
@@ -331,7 +370,7 @@ const DataOverview = ({ rotation, opacity }) => {
                     titles={titles}
                     series={series}
                     fontSize={fontsize}
-                    color={color}
+                    // color={colorDataMapping[selectedColorName]}
                   />
                 )}
               </Card>

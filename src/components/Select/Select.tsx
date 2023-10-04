@@ -63,7 +63,7 @@ const CustomSelect = ({
   };
 
   return (
-    <Stack spacing={1} sx={{ width: 270 }} marginY={marginY}>
+    <Stack spacing={1} sx={{ width: "200px" }} marginY={marginY}>
       <span style={{ fontSize: "14px" }}>{main_title}</span>
       <Select
         sx={{
@@ -74,11 +74,11 @@ const CustomSelect = ({
         }}
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={value || options[defaultValue]}
+        value={value}
         // label="Age"
         onChange={handleChange}
       >
-        {options.map((name: any) => (
+        {options?.map((name: any) => (
           <MenuItem key={name} value={name}>
             {name}
           </MenuItem>

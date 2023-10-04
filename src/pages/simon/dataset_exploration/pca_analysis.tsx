@@ -26,7 +26,7 @@ const PCA_Analysis = ({ rotation, opacity }) => {
     "Classic",
   ];
   const color_data = ["Red", "Blue", "Green", "Yellow"];
-
+  const [col, setCol] = useState([]);
   const [counter, setCounter] = useState(100);
   const [xaxis, setXAxis] = useState("");
   const [yaxis, setYAxis] = useState("");
@@ -46,8 +46,9 @@ const PCA_Analysis = ({ rotation, opacity }) => {
         <Grid item md={4} sm={4}>
           <NewSelect
             main_title="Columns"
-            dropvalues={Columns}
+            dropvalues={col}
             marginY={marginY}
+            setSelectCol={setCol}
           />
           <Counter
             main_title="First (n) columns"
@@ -90,7 +91,7 @@ const PCA_Analysis = ({ rotation, opacity }) => {
           />
           <hr
             style={{
-              width: "270px",
+              width: "200px",
               height: "1px",
               backgroundColor: "rgba(0,0,0,0.2)",
               border: 0,

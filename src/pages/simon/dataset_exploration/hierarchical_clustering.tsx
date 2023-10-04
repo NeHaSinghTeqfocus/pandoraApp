@@ -58,6 +58,7 @@ const hierarchical_clustering = ({ rotation, opacity }) => {
     { title: "Rownames", bool: false },
     { title: "Colnames", bool: false },
   ]);
+  const [col, setCol] = useState([]);
   const [colnames, setColnames] = useState(9);
   const [rownames, setRownames] = useState(9);
   const [plotwidth, setPlotWidth] = useState(20);
@@ -76,8 +77,9 @@ const hierarchical_clustering = ({ rotation, opacity }) => {
         <Grid item md={4} sm={4}>
           <NewSelect
             main_title="Columns"
-            dropvalues={Columns}
+            dropvalues={col}
             marginY={marginY}
+            setSelectCol={setCol}
           />
           <Counter
             main_title="First (n) columns"

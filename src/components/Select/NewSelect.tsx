@@ -10,12 +10,13 @@ const NewSelect = ({ main_title, dropvalues, marginY, setSelectCol }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleOnChange = (e, value) => {
+    console.log("Selected Options:", value);
     setSelectedOptions(value); // Update selected options
     setSelectCol(value); // Call the provided onChange callback
   };
 
   return (
-    <Stack spacing={1} sx={{ width: 270 }} marginY={marginY}>
+    <Stack spacing={1} sx={{ width: "200px" }} marginY={marginY}>
       <span style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
         {main_title}
         <Tooltip
@@ -77,7 +78,9 @@ const NewSelect = ({ main_title, dropvalues, marginY, setSelectCol }) => {
                 color: "#909399 !important",
               },
               "& .MuiChip-filled": {
-                height: "27px",
+                height: "25px",
+                borderRadius: "8px",
+                border: "1px solid #D3D3D3",
               },
             }}
             placeholder={selectedOptions.length === 0 ? "Type to search" : ""}

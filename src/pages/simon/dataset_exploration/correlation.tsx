@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import CustomSelect from "@/components/Select/Select";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import NewSelect from "@/components/Select/NewSelect";
 import Counter from "@/components/Counter/Counter";
 import Switch from "@/components/Switch/Switch";
 import MyCheckbox from "@/components/MyCheckbox/Checkbox";
 import CustomButton from "@/components/Button/Button";
 import PlotIcon from "@/icon/PlotGrowIcon";
+import ExportToCsv from "@/components/ExportToCsv/ExportToCsv";
+import ChartComponent from "@/components/Graphs/DataOverview/DataOverview";
 
 const Correlation = ({ rotation, opacity }) => {
-  const top100Films = [
+  const topFiles = [
     { title: "The Shawshank Redemption", year: 1994 },
     { title: "The Godfather", year: 1972 },
     { title: "The Godfather: Part II", year: 1974 },
@@ -46,7 +48,7 @@ const Correlation = ({ rotation, opacity }) => {
     "Hierarchical clustering",
     "Alphabetical",
   ];
-
+  const [col, setCol] = useState([]);
   const [counter, setCounter] = useState(100);
   const [correl, setCorrel] = useState("");
   const [naAction, setNaAction] = useState("");
@@ -66,14 +68,15 @@ const Correlation = ({ rotation, opacity }) => {
         <Grid item md={4} sm={4}>
           <NewSelect
             main_title="Columns"
-            dropvalues={top100Films}
+            dropvalues={col}
             marginY={marginY}
+            setSelectCol={setCol}
           />
           <Counter
             main_title="First (n) columns"
             value={counter}
             setValue={setCounter}
-            //   max={100}
+            max={100}
             marginY={marginY}
           />
           <CustomSelect
@@ -146,11 +149,11 @@ const Correlation = ({ rotation, opacity }) => {
                 distribution patterns of a dozen of variables in one single
                 figure.
               </Typography>
-              <ExportToCsv
+              {/* <ExportToCsv
                 data={csvData}
                 filename="chart_data.csv"
                 label="Download CSV"
-              />
+              /> */}
 
               <Card sx={{ marginTop: "15px", width: "100%", height: "500px" }}>
                 {isLoading ? (

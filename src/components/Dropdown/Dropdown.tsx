@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     "& .MuiOutlinedInput-root": {
       backgroundColor: "#FFFFFF",
       borderRadius: "4px",
+      width: "200px",
     },
     "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
       borderColor: "black !important", // Add !important to override conflicting styles

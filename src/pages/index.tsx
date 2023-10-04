@@ -34,6 +34,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
+import CustomPagination from "@/components/Pagination/Pagination";
 
 const data = [
   {
@@ -592,7 +593,8 @@ const Home: React.FC = () => {
           selectionModel={selectionModel} // Pass the selectionModel
           onSelectionModelChange={handleSelectionChange}
         />
-        <Box mt={4}>Total {tableData.length}</Box>
+        {/* <Box mt={4}>Total {tableData.length}</Box> */}
+        <CustomPagination count={5} page={1} color="primary" />
       </Box>
     </Box>
   );
