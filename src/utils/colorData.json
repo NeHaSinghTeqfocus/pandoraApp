@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "value": "Light Blue",
+    "color": "#ADD8E6"
+  },
+  {
+    "id": 2,
+    "value": "Light Green",
+    "color": "#90EE90"
+  },
+  {
+    "id": 3,
+    "value": "Light Yellow",
+    "color": "#FFFFE0"
+  },
+  {
+    "id": 3,
+    "value": "Light Pink",
+    "color": "#FFB6C1"
+  },
+  {
+    "id": 4,
+    "value": "Light Coral",
+    "color": "#F08080"
+  },
+  {
+    "id": 5,
+    "value": "Light Lavender",
+    "color": "#E6E6FA"
+  }
+]

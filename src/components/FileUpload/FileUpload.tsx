@@ -1,3 +1,4 @@
+import { handleFileUpload } from "@/utils/helper_functions";
 import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { UploadDropzone } from "react-uploader";
@@ -18,7 +19,7 @@ const uploaderOptions = {
     colors: {
       primary: "#A9B5FD ",
     },
-    innerHeight:'20px'
+    innerHeight: "20px",
   },
 };
 
@@ -33,18 +34,22 @@ const MyDropzone = ({ setFiles }: any) => (
       backgroundColor: "white",
     }}
   >
+    <input
+      type={"file"}
+      accept={".csv"}
+      onChange={(e) => handleFileUpload(e)}
+    />
     <UploadDropzone
       uploader={uploader}
       options={uploaderOptions}
       onUpdate={(files) =>
         console.log(`Files: ${files.map((x) => x.fileUrl).join("\n")}`)
       }
-      onComplete={setFiles}
+      onComplete={(files) => alert(files.map((x) => x.fileUrl).join("\n"))}
       width="1300px"
       minWidth="250px"
       height="140px"
       className=""
-      
     />
   </Box>
 );

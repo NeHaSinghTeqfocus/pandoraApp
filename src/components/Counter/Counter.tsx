@@ -10,6 +10,7 @@ const Counter = ({
   slider = false,
   marginY,
   disabled = false,
+  isNColumn = false,
 }) => {
   const CounterFn = (val) => {
     if (val === "add") {
@@ -25,7 +26,23 @@ const Counter = ({
         setValue(value - 1);
       }
     }
+    if (isNColumn) {
+      if (val === "add") {
+        if (max === undefined) {
+          setValue(value + 5);
+        } else {
+          if (value < max) {
+            setValue(value + 5);
+          }
+        }
+      } else {
+        if (value > min) {
+          setValue(value - 5);
+        }
+      }
+    }
   };
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number);
   };
@@ -48,16 +65,29 @@ const Counter = ({
             }}
             value={value}
             max={max}
+            min={min}
             onChange={handleChange}
             // aria-label="Disabled slider"
           />
         ) : null}
         <ButtonGroup variant="outlined" aria-label="outlined button group">
-          <Button onClick={() => CounterFn("sub")}>-</Button>
-          <Button disableRipple sx={{ color: "black" }}>
+          <Button sx={{ width: "68px" }} onClick={() => CounterFn("sub")}>
+            -
+          </Button>
+          <Button
+            sx={{ width: "68px", color: "black" }}
+            disabled={disabled}
+            disableRipple
+          >
             {value}
           </Button>
-          <Button onClick={() => CounterFn("add")}>+</Button>
+          <Button
+            sx={{ width: "68px" }}
+            disabled={disabled}
+            onClick={() => CounterFn("add")}
+          >
+            +
+          </Button>
         </ButtonGroup>
       </Box>
     </Stack>

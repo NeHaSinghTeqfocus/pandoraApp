@@ -13,18 +13,25 @@ import { Grid, Paper } from "@mui/material";
 import PlotIcon from "@/icon/PlotGrowIcon";
 import { styled } from "@mui/system";
 
-// import styled, { keyframes } from "styled-components";
-
 const DatasetExploration = () => {
   const [value, setValue] = React.useState(0);
   const [animatePlotIcon, setAnimatePlotIcon] = React.useState(false);
 
+  const [rotation, setRotation] = React.useState(360);
+  const [opacity, setOpacity] = React.useState(1);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    setAnimatePlotIcon(true); // Trigger the animation
+    setRotation(280);
+    setOpacity(0);
     setTimeout(() => {
-      setAnimatePlotIcon(false); // Reset the animation after a delay (adjust timing as needed)
-    }, 500); // Delay should match the transition duration in CSS
+      setRotation(360);
+      setOpacity(1);
+    }, 500);
+    // setAnimatePlotIcon(true); // Trigger the animation
+    // setTimeout(() => {
+    //   // setAnimatePlotIcon(false); // Reset the animation after a delay (adjust timing as needed)
+    // }, 500); // Delay should match the transition duration in CSS
   };
   const AnimatedPlotIcon = styled(PlotIcon)(({ theme }) => ({
     transition: "transform 0.5s ease-in",
@@ -143,24 +150,54 @@ const DatasetExploration = () => {
         </Tabs>
       </Box>
       <Grid container style={{ backgroundColor: "white" }}>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           {value === 0 ? (
-            <DataOverview />
+            <DataOverview
+              rotation={rotation}
+              setRotation={setRotation}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
           ) : value === 1 ? (
-            <Correlation />
+            <Correlation
+              rotation={rotation}
+              setRotation={setRotation}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
           ) : value === 2 ? (
-            <Hierarchical_clustering />
+            <Hierarchical_clustering
+              rotation={rotation}
+              setRotation={setRotation}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
           ) : value === 3 ? (
-            <PCA_Analysis />
+            <PCA_Analysis
+              rotation={rotation}
+              setRotation={setRotation}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
           ) : value === 4 ? (
-            <T_SNE_Analysis />
+            <T_SNE_Analysis
+              rotation={rotation}
+              setRotation={setRotation}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
           ) : value === 5 ? (
-            <UMAP_Analysis />
+            <UMAP_Analysis
+              rotation={rotation}
+              setRotation={setRotation}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
           ) : null}
         </Grid>
-        <Grid bgcolor="#fff" mt={1} pl={15} item xs={8}>
+        {/* <Grid bgcolor="#fff" mt={1} pl={15} item xs={8}>
           <AnimatedPlotIcon />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "theme_gray_background",
+    "name": "Gray Background",
+    "color": "#E0E0E0",
+    "description": "A light gray background color for the Gray theme."
+  },
+  {
+    "id": "theme_bw_background",
+    "name": "Black & White Background",
+    "color": "#FFFFFF",
+    "description": "A white background color for the Black & White theme."
+  },
+  {
+    "id": "theme_linedraw_background",
+    "name": "Line Draw Background",
+    "color": "#F0F0F0",
+    "description": "A light gray background color for the Line Draw theme."
+  },
+  {
+    "id": "theme_light_background",
+    "name": "Light Background",
+    "color": "#F5F5F5",
+    "description": "A slightly off-white background color for the Light theme."
+  },
+  {
+    "id": "theme_dark_background",
+    "name": "Dark Background",
+    "color": "#333333",
+    "description": "A dark gray background color for the Dark theme."
+  },
+  {
+    "id": "theme_minimal_background",
+    "name": "Minimal Background",
+    "color": "#FCFCFC",
+    "description": "A very light gray background color for the Minimal theme."
+  },
+  {
+    "id": "theme_classic_background",
+    "name": "Classic Background",
+    "color": "#F2F2F2",
+    "description": "A light gray background color for the Classic theme."
+  },
+  {
+    "id": "theme_void_background",
+    "name": "Empty Background",
+    "color": "#FFFFFF",
+    "description": "A white background color for the Empty theme."
+  }
+]
