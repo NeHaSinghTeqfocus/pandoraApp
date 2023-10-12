@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";

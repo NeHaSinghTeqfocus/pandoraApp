@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Box, Checkbox, Stack } from "@mui/material";
 
 const MyCheckbox = ({ label, value, setValue, marginY, multiple = false }) => {

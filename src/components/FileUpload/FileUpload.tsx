@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { handleFileUpload } from "@/utils/helper_functions";
 import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Box, Button, ButtonGroup, Stack } from "@mui/material";
 import Slider from "@mui/material/Slider";
 
@@ -11,22 +12,22 @@ const Counter = ({
   marginY,
   disabled = false,
   isNColumn = false,
+  isTextSize = false,
 }) => {
   const CounterFn = (val) => {
-    if (val === "add") {
-      if (max === undefined) {
-        setValue(value + 1);
+    if (isTextSize) {
+      let newValue;
+
+      if (val === "add") {
+        newValue = Math.min(value + 0.2, max || 3);
       } else {
-        if (value < max) {
-          setValue(value + 1);
-        }
+        newValue = Math.max(value - 0.2, min || 0.2);
       }
-    } else {
-      if (value > min) {
-        setValue(value - 1);
-      }
-    }
-    if (isNColumn) {
+
+      newValue = Math.round(newValue * 10) / 10;
+
+      setValue(newValue);
+    } else if (isNColumn) {
       if (val === "add") {
         if (max === undefined) {
           setValue(value + 5);
@@ -38,6 +39,20 @@ const Counter = ({
       } else {
         if (value > min) {
           setValue(value - 5);
+        }
+      }
+    } else {
+      if (val === "add") {
+        if (max === undefined) {
+          setValue(value + 1);
+        } else {
+          if (value < max) {
+            setValue(value + 1);
+          }
+        }
+      } else {
+        if (value > min) {
+          setValue(value - 1);
         }
       }
     }

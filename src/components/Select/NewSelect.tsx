@@ -1,6 +1,6 @@
+// @ts-nocheck
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
-
 import React, { useState } from "react";
 import { TextField, Tooltip } from "@mui/material";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
@@ -64,6 +64,7 @@ const NewSelect = ({ main_title, dropvalues, marginY, setSelectCol }) => {
         options={dropvalues}
         onChange={handleOnChange}
         value={selectedOptions}
+        clearOnBlur={true}
         // defaultValue={[top100Films[13]]}
         // filterSelectedOptions
         renderInput={(params) => (
@@ -73,15 +74,21 @@ const NewSelect = ({ main_title, dropvalues, marginY, setSelectCol }) => {
               "& .MuiChip-label": {
                 fontSize: "11px",
               },
+
               "& .MuiChip-deleteIcon": {
                 fontSize: "12px !important",
                 color: "#909399 !important",
               },
               "& .MuiChip-filled": {
-                height: "25px",
+                display: "inline-flex", // Display chips inline
+                alignItems: "center", // Align chips vertically
+                margin: "2px",
+                height: "22px",
                 borderRadius: "8px",
                 border: "1px solid #D3D3D3",
               },
+              display: "flex",
+              // flexWrap: "wrap",
             }}
             placeholder={selectedOptions.length === 0 ? "Type to search" : ""}
           />

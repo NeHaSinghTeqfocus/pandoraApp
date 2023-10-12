@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import CustomSelect from "@/components/Select/Select";
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
@@ -9,16 +10,41 @@ import CustomButton from "@/components/Button/Button";
 import PlotIcon from "@/icon/PlotGrowIcon";
 import ExportToCsv from "@/components/ExportToCsv/ExportToCsv";
 import ChartComponent from "@/components/Graphs/DataOverview/DataOverview";
+import CorrelationTab from "@/components/Graphs/Correlation/CorrelationTab";
+import ConfusionMatrixPlot from "@/components/Graphs/Correlation/CorrelationTab";
 
 const Correlation = ({ rotation, opacity }) => {
-  const topFiles = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-    { title: "The Godfather: Part II", year: 1974 },
-    { title: "The Dark Knight", year: 2008 },
-    { title: "12 Angry Men", year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: "Pulp Fiction", year: 1994 },
+  const dataMap = [
+    "IDIndex",
+    "Hospitalized",
+    "Age",
+    "Gender",
+    "Height",
+    "Weight",
+    "CircArm",
+    "CircWaist",
+    "SympTemp",
+    "SympFever7Days",
+    "SympHead",
+    "SympNausea",
+    "SympMuscle",
+    "SympRash",
+    "SympBleed",
+    "SympRhin",
+    "SympVomit",
+    "SympDrowsy",
+    "SympCough",
+    "SympAbs",
+    "SympDiarrhea",
+    "SympOrbital",
+    "Tourniquet",
+    "HistAllergies",
+    "HistHyper",
+    "HistAsthma",
+    "HistCancer",
+    "HistDiab",
+    "HistDengHouse4Wk",
+    "HistDeng",
   ];
 
   const marginY = 3;
@@ -39,6 +65,7 @@ const Correlation = ({ rotation, opacity }) => {
     "Number",
     "Shade",
     "Color",
+    "Pie",
   ];
   const plot_type_data = ["Full", "Lower", "Upper"];
   const reorder_coor_data = [
@@ -49,28 +76,185 @@ const Correlation = ({ rotation, opacity }) => {
     "Alphabetical",
   ];
   const [col, setCol] = useState([]);
+  const [tempSelectedColumns, setTempSelectedColumns] = useState([]);
   const [counter, setCounter] = useState(100);
   const [correl, setCorrel] = useState("");
   const [naAction, setNaAction] = useState("");
-  const [plotmethod, setPlotMethod] = useState("");
+  const [plotmethod, setPlotMethod] = useState(plot_data[1]);
   const [plottype, setPlotType] = useState("");
   const [recorrel, setReCorrel] = useState("");
-  const [textsize, setTextSize] = useState(0.4);
+  const [textsize, setTextSize] = useState(8);
   const [significancetest, setSignificanceTest] = useState(false);
   const [confidenceinterval, setConfidenceInterval] = useState(false);
 
   const [isPlotImage, setIsPlotImage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [symbol, setSymbol] = useState("circle");
+  const [tempTextSize, setTempTextSize] = useState(textsize);
+  const plotMethodToSymbol = {
+    Mixed: "rect",
+    Circle: "circle",
+    Square: "rect",
+    Ellipse: "path://M0,50A50,25,0,1,0,100,50A50,25,0,1,0,0,50Z",
+    // Ellipse: "path://M 0 0 A 45 25 0 1 0 90 0 A 45 25 0 1 0 0 0",
+    Number: "4",
+    Shade: "diamond",
+    Color: "triangle",
+    Pie: "path://M14 18v-14c-7.732 0-14 6.268-14 14s6.268 14 14 14 14-6.268 14-14c0-2.251-0.532-4.378-1.476-6.262l-12.524 6.262zM28.524 7.738c-2.299-4.588-7.043-7.738-12.524-7.738v14l12.524-6.262z",
+  };
+
+  const handlePlotImage = () => {
+    setIsPlotImage(!isPlotImage);
+    setTextSize(tempTextSize);
+    setCol(tempSelectedColumns);
+  };
+  const handlePlotMethodChange = (event) => {
+    const selectedPlotMethod = event.target.value;
+    setPlotMethod(selectedPlotMethod);
+    const updatedSymbol = plotMethodToSymbol[selectedPlotMethod];
+    setSymbol(updatedSymbol);
+  };
+  const handleTextSizeChange = (event) => {
+    const newSize = parseFloat(event.target.value);
+    setTempTextSize(newSize);
+  };
+  const handleColumnSelectionChange = (selectedCols) => {
+    // Update the temporary selected columns whenever the selection changes
+    setTempSelectedColumns(selectedCols);
+  };
+
+  const confusionMatrix = [
+    [
+      30, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 30, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 30, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 30, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 30, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 30, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 30, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 30, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 30, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 30, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 30, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 30, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 30, 5, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 30, 8, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 30, 2, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 30, 14, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 30, 10, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 30, 9, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 30, 5, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 30, 15, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 30, 2,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 30,
+      3, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3,
+      30, 5, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      30, 8, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      8, 30, 2, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      8, 2, 30, 14, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      8, 2, 14, 30, 10, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      8, 2, 14, 10, 30, 9, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      8, 2, 14, 10, 9, 30, 5,
+    ],
+    [
+      2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5, 8, 2, 14, 10, 9, 5, 15, 2, 3, 5,
+      8, 2, 14, 10, 9, 5, 30,
+    ],
+  ];
 
   return (
     <Box>
-      <Grid p={2} container style={{ backgroundColor: "white" }}>
-        <Grid item md={4} sm={4}>
+      <Grid p={1} spacing={0} container style={{ backgroundColor: "white" }}>
+        <Grid item md={3} sm={3}>
           <NewSelect
             main_title="Columns"
-            dropvalues={col}
+            dropvalues={dataMap}
             marginY={marginY}
-            setSelectCol={setCol}
+            setSelectCol={handleColumnSelectionChange}
           />
           <Counter
             main_title="First (n) columns"
@@ -84,6 +268,7 @@ const Correlation = ({ rotation, opacity }) => {
             options={correlation_data}
             value={correl}
             setValue={setCorrel}
+            onChange={() => {}}
             defaultValue={0}
             marginY={marginY}
           />
@@ -99,7 +284,7 @@ const Correlation = ({ rotation, opacity }) => {
             main_title="Plot method"
             options={plot_data}
             value={plotmethod}
-            setValue={setPlotMethod}
+            onChange={handlePlotMethodChange}
             defaultValue={0}
             marginY={marginY}
           />
@@ -120,11 +305,14 @@ const Correlation = ({ rotation, opacity }) => {
             marginY={marginY}
           />
           <Counter
+            isTextSize
             main_title="Text Size"
-            value={textsize}
-            setValue={setTextSize}
-            max={100}
+            value={tempTextSize} // Use tempTextSize as the value
+            setValue={setTempTextSize} // Update tempTextSize when the value changes
+            min={8}
+            max={20}
             marginY={marginY}
+            onChange={handleTextSizeChange} // Handle text size change
           />
           <MyCheckbox
             label="Significance Text"
@@ -138,36 +326,35 @@ const Correlation = ({ rotation, opacity }) => {
             setValue={setConfidenceInterval}
             marginY={marginY}
           />
-          <CustomButton />
+          <CustomButton onClick={handlePlotImage} />
         </Grid>
-        <Grid item md={8} sm={8}>
+        <Grid item md={9} sm={9}>
           {isPlotImage ? (
             <Box>
-              <Typography>
-                The tableplot is a visualization method that is used to explore
-                and analyze large datasets, is able to display the aggregated
-                distribution patterns of a dozen of variables in one single
-                figure.
-              </Typography>
               {/* <ExportToCsv
                 data={csvData}
                 filename="chart_data.csv"
                 label="Download CSV"
               /> */}
 
-              <Card sx={{ marginTop: "15px", width: "100%", height: "500px" }}>
-                {isLoading ? (
-                  <div>Loading...</div>
-                ) : (
-                  <ChartComponent
-                    grid={grid}
-                    xAxis={xAxis}
-                    yAxis={yAxis}
-                    titles={titles}
-                    series={series}
-                    fontSize={fontsize}
-                  />
-                )}
+              <Card
+                sx={{
+                  marginRight: "300px",
+                  background: "transparent",
+                  width: "100%",
+                  maxWidth: "100%",
+                  height: "100%",
+                  // marginBottom: "200px",
+                }}
+                elevation={0}
+              >
+                <ConfusionMatrixPlot
+                  fontSize={textsize}
+                  confusionMatrix={confusionMatrix}
+                  symbol={symbol}
+                  dataMap={dataMap}
+                  columnNames={col}
+                />
               </Card>
             </Box>
           ) : (

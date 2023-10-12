@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import CustomSelect from "@/components/Select/Select";
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
@@ -85,11 +86,6 @@ const DataOverview = ({ rotation, opacity }) => {
     const updatedSelected = selected;
   }, [selected]);
   const handlePlotImage = () => {
-    // console.log(selected, "select");
-    // console.log(col, "col");
-    // console.log(selected.length, "selected length");
-    // console.log(col.length, "col length");
-
     if (selected.length == 0 && col.length > 0) {
       setSelected(col);
       setIsLoading(false);
@@ -231,11 +227,6 @@ const DataOverview = ({ rotation, opacity }) => {
     setSeries(series_val);
     setIsPlotImage(true);
     setIsLoading(false);
-    // } catch (error) {
-    //   console.error("Error:", error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
   };
 
   const prepareDataForCSV = () => {
@@ -294,18 +285,18 @@ const DataOverview = ({ rotation, opacity }) => {
             main_title="Theme"
             options={theme_data}
             value={theme}
-            setValue={(colorName) => {
-              setTheme(colorName);
+            onChange={(event) => {
+              setTheme(event.target.value);
             }}
-            defaultValue={0}
+            // defaultValue={0}
             marginY={marginY}
           />
           <CustomSelect
             main_title="Color"
             options={color_data}
             value={selectedColorName}
-            setValue={(colorName) => {
-              setSelectedColorName(colorName);
+            onChange={(event) => {
+              setSelectedColorName(event.target.value);
             }}
             marginY={marginY}
           />
