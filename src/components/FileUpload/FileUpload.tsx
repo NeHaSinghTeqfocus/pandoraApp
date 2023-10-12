@@ -31,7 +31,7 @@ const MyDropzone = ({ setFiles }: any) => (
     sx={{
       padding: "20px 5px 20px 15px",
       height: "150px",
-      width: "1250px",
+      width: "1150px",
       backgroundColor: "white",
     }}
   >

@@ -22,7 +22,6 @@ const pages = ["Dashboard"];
 const settings = ["Dashboard", "Setting", "Logout"];
 const Language = ["Arbic", "Hindi", "English", "Brazil", "Chineese"];
 
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -49,7 +48,6 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-
   };
 
   const handleCloseUserMenu = () => {
@@ -58,7 +56,7 @@ function ResponsiveAppBar() {
 
   const router = useRouter();
   const currentUrl = router.asPath; // Get the current URL
-  const isDashboard = router.pathname === '/about';
+  const isDashboard = router.pathname === "/workspace";
 
   return (
     <Box sx={{ "& .MuiPaper-root": { background: "#FBFBFB" } }}>
@@ -109,13 +107,33 @@ function ResponsiveAppBar() {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "black", display: "block", textTransform: "none", }}
+                  sx={{
+                    m: 1,
+                    color: "black",
+                    display: "block",
+                    textTransform: "none",
+                    marginLeft: "15px",
+                  }}
                 >
                   {page}
                 </Button>
               ))}
-              { isDashboard?<Button onClick={() => router.push('/workspace')} >{currentUrl}</Button> : ""}
-              <Button>{currentUrl}</Button>
+              {isDashboard ? (
+                <Button
+                  onClick={() => router.push("/workspace")}
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    display: "block",
+                    height:'38px',
+                    marginTop:'7px'
+                  }}
+                >
+                  {currentUrl.split("/")}
+                </Button>
+              ) : (
+                ""
+              )}
             </Box>
             <Box sx={{ padding: "5px 10px 5px 10px", marginLeft: "-30px" }}>
               <Typography
